@@ -2,20 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-10-01">
+<meta name="dcterms.date" content="2022-11-21">
 
-<title>[STUDENT/GROUP NAME] Progress Journal - 1&nbsp; Assignment 1</title>
+<title>Ramble On’s Progress Journal - 1&nbsp; Assignment 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -54,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -67,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -141,9 +146,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">[STUDENT/GROUP NAME] Progress Journal</a> 
+      <a href="./">Ramble On’s Progress Journal</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/pjournal/gh-pages-quarto-template" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/pjournal/mef06g-ramble-on" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
     <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
     <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
         <li>
@@ -184,7 +189,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#this-is-the-first-assignment-of-the-group-projects." id="toc-this-is-the-first-assignment-of-the-group-projects." class="nav-link active" data-scroll-target="#this-is-the-first-assignment-of-the-group-projects.">This is the first assignment of the group projects.</a></li>
+  <li><a href="#value-by-company" id="toc-value-by-company" class="nav-link" data-scroll-target="#value-by-company"><span class="toc-section-number">1.1</span>  Value by Company</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -202,7 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 1, 2022</p>
+      <p class="date">November 21, 2022</p>
     </div>
   </div>
     
@@ -211,17 +223,170 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>This is a template example qmd output page. You may see an example R code below.</p>
+<section id="this-is-the-first-assignment-of-the-group-projects." class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="this-is-the-first-assignment-of-the-group-projects.">This is the first assignment of the group projects.</h2>
+<p>First, the necessary libraries and data are imported.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(LETTERS,<span class="dv">5</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(vec1,<span class="at">collapse=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("readxl")</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package(kni)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"assignment1/startup_deals_2021.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The problematic characters in the column names are removed to make accessing the columns easier. Then we can get a “glimpse” of our data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"%"</span>, <span class="st">""</span>, <span class="fu">names</span>(df))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">names</span>(df))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[()]"</span>, <span class="st">""</span>, <span class="fu">names</span>(df))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "YDGAB"</code></pre>
+<pre><code>Rows: 297
+Columns: 9
+$ Target_Company      &lt;chr&gt; "Abonesepeti", "Abrakadabra", "Ace Games", "Adlema…
+$ Sector              &lt;chr&gt; "SaaS", "Gaming", "Gaming", "Internet of things", …
+$ Investor            &lt;chr&gt; "Keiretsu Forum, Berkan Burla", "WePlay Ventures",…
+$ Announcement_Date   &lt;chr&gt; "June 2021", "December 2021", "April 2021", "June …
+$ Financial_Investor  &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "…
+$ `Investor's_Origin` &lt;chr&gt; "Turkey", "Turkey", "Turkey, USA", "Turkey", "Turk…
+$ Stake_              &lt;chr&gt; "5.00%", "5.00%", "NA", "NA", "NA", "NA", "10.92%"…
+$ Deal_Value_USD      &lt;chr&gt; "100000", "250000", "NA", "120000", "100000", "100…
+$ Investment_Stage    &lt;chr&gt; "Seed Stage", "Seed Stage", "Seed Stage", "Seed St…</code></pre>
+</div>
+</div>
+<p>It can be seen that the “Stake_” and “Deal_Value_USD” columns appear as strings. That’s not good for business.</p>
+<p>Let’s start with the “Deal_Value_USD” column. suppressWarnings used to avoid the warnings for the NaN values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"Deal_Value_USD"</span><span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.integer</span>(df<span class="sc">$</span><span class="st">"Deal_Value_USD"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It gets a bit cumbersome when it comes to the “Stake_” column. If we were to change it like we did for the first column, we would get NaNs for the values. We can check the values in the column to investigate this problem.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[<span class="st">"Stake_"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Stake_
+  0.46%   1.33%  10.00%  10.42%  10.65% 10.71 % 10.91 %  10.92% 100.00%  11.00% 
+      1       1      12       1       1       1       1       1      12       2 
+ 11.03% 11.11 %  11.55%  12.00%  12.50% 12.61 %  14.06%  14.28%  14.29%  14.30% 
+      1       1       1       1       4       1       1       1       2       1 
+ 14.60% 14.71 % 14.91 %  15.00%  15.38%  15.49%  15.50%  15.60%  15.79%  16.13% 
+      1       1       1       1       1       1       1       1       1       2 
+  1750%  18.66%  19.99%   2.00%  2.21 %   2.59%  20.00%  20.83%  22.00%  22.73% 
+      1       1       1       2       1       1       7       1       1       1 
+ 23.50%  24.29%  25.00%  25.23%  28.00%   3.33%   3.38%   3.63%  30.00%  33.33% 
+      1       1       2       1       1       2       1       1       1       1 
+ 35.00%  35.09%  37.50%  37.70%   4.00%   4.44%   4.75%   5.00%   5.20%   5.67% 
+      1       1       1       1       1       1       1      10       1       1 
+ 5.81 %   5.88%   5.90%  50.00%   6.00%   6.25%   6.34%  6.51 %   6.60%  60.00% 
+      1       2       1       3       2       1       1       1       1       4 
+ 69.82%   7.00%   7.14%   7.39%   7.50%   7.69%  75.00%   8.05%   8.08%   8.33% 
+      1       1       1       1       1       1       1       1       1       1 
+  8.47%   8.70%  88.89%   9.39%   9.40%  9.91 %      NA 
+      2       1       1       1       1       1     157 </code></pre>
+</div>
+</div>
+<p>“%” characters and the white space in some of the cells cause problems. They are removed, and the type is changed. The warnings are suppressed again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"Stake_"</span><span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"%"</span>,<span class="st">""</span>, df<span class="sc">$</span><span class="st">"Stake_"</span>) <span class="sc">%&gt;%</span> <span class="fu">trimws</span>(df<span class="sc">$</span><span class="st">"Stake_"</span>, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"both"</span>)) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(df<span class="sc">$</span><span class="st">"Stake_"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 297
+Columns: 9
+$ Target_Company      &lt;chr&gt; "Abonesepeti", "Abrakadabra", "Ace Games", "Adlema…
+$ Sector              &lt;chr&gt; "SaaS", "Gaming", "Gaming", "Internet of things", …
+$ Investor            &lt;chr&gt; "Keiretsu Forum, Berkan Burla", "WePlay Ventures",…
+$ Announcement_Date   &lt;chr&gt; "June 2021", "December 2021", "April 2021", "June …
+$ Financial_Investor  &lt;chr&gt; "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "…
+$ `Investor's_Origin` &lt;chr&gt; "Turkey", "Turkey", "Turkey, USA", "Turkey", "Turk…
+$ Stake_              &lt;dbl&gt; 5.00, 5.00, NA, NA, NA, NA, 10.92, NA, NA, 15.38, …
+$ Deal_Value_USD      &lt;int&gt; 100000, 250000, NA, 120000, 100000, 1000000, 25000…
+$ Investment_Stage    &lt;chr&gt; "Seed Stage", "Seed Stage", "Seed Stage", "Seed St…</code></pre>
+</div>
+</div>
+</section>
+<section id="value-by-company" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="value-by-company"><span class="header-section-number">1.1</span> Value by Company</h2>
+<p>The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Target_Company) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Deal_Value_USD =</span> <span class="fu">sum</span>(Deal_Value_USD)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Deal_Value_USD))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(df_grouped, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Target_Company</th>
+<th style="text-align: right;">Deal_Value_USD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">trendyol</td>
+<td style="text-align: right;">1435000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Getir</td>
+<td style="text-align: right;">1018000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hepsiburada</td>
+<td style="text-align: right;">761481000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dream Games</td>
+<td style="text-align: right;">155000050</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Libra Softworks</td>
+<td style="text-align: right;">30000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Prota</td>
+<td style="text-align: right;">30000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BluTV</td>
+<td style="text-align: right;">20800000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arvento</td>
+<td style="text-align: right;">20565000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Akinon</td>
+<td style="text-align: right;">20000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Biotrend Energy</td>
+<td style="text-align: right;">20000000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can also visualize these companies and compare them.</p>
+<p>Visualizing so many companies will make the plot unreadable. We can just select the top 5% and feed them to our plot.</p>
+<p>We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>qu <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df_grouped<span class="sc">$</span>Deal_Value_USD, <span class="at">probs =</span> <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Deal_Value_USD <span class="sc">&gt;=</span> qu) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Target_Company, <span class="sc">+</span>Deal_Value_USD),<span class="at">y =</span> Deal_Value_USD))<span class="sc">+</span>     </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Investments by Company"</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Company"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Deal Value in USD (Millions)"</span>) <span class="sc">+</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">" M"</span>, <span class="at">scale =</span> <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="assignment1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -293,7 +458,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

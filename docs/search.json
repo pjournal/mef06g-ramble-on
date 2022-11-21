@@ -2,36 +2,22 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "[STUDENT/GROUP NAME] Progress Journal",
+    "title": "Ramble On’s Progress Journal",
     "section": "",
-    "text": "This progress journal covers [STUDENT NAME SURNAME / PROJECT GROUP NAME]’s work during their term at BDA 503 Fall 2022.\nEach section is an assignment or an individual work."
-  },
-  {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
-    "section": "",
-    "text": "See Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
-  },
-  {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "2  Summary",
-    "section": "",
-    "text": "In summary, this book has no content whatsoever."
-  },
-  {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
-    "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "This progress journal covers Ramble On’s work during their term at BDA 503 Fall 2022.\nEach section is an assignment or an individual work.\n\n\n\nArzu Alpan\n\nDoğanbarış Gündoğan\nEce Acaroğlu\nGizem Çınar\nTayyip Sinan Ocaktan"
   },
   {
     "objectID": "assignment1.html",
     "href": "assignment1.html",
     "title": "1  Assignment 1",
     "section": "",
-    "text": "set.seed(1)\nvec1 <- sample(LETTERS,5)\npaste0(vec1,collapse=\"\")\n\n[1] \"YDGAB\""
+    "text": "First, the necessary libraries and data are imported.\n\n# install.packages(\"readxl\")\n# install.package(kni)\nlibrary(readxl)\nlibrary(knitr)\nlibrary(ggplot2)\nlibrary(dplyr)\nlibrary(scales)\ndf <- readxl::read_excel(\"assignment1/startup_deals_2021.xlsx\")\n\nThe problematic characters in the column names are removed to make accessing the columns easier. Then we can get a “glimpse” of our data.\n\nnames(df) <- gsub(\"%\", \"\", names(df))\nnames(df) <- gsub(\" \", \"_\", names(df))\nnames(df) <- gsub(\"[()]\", \"\", names(df))\nglimpse(df)\n\nRows: 297\nColumns: 9\n$ Target_Company      <chr> \"Abonesepeti\", \"Abrakadabra\", \"Ace Games\", \"Adlema…\n$ Sector              <chr> \"SaaS\", \"Gaming\", \"Gaming\", \"Internet of things\", …\n$ Investor            <chr> \"Keiretsu Forum, Berkan Burla\", \"WePlay Ventures\",…\n$ Announcement_Date   <chr> \"June 2021\", \"December 2021\", \"April 2021\", \"June …\n$ Financial_Investor  <chr> \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"…\n$ `Investor's_Origin` <chr> \"Turkey\", \"Turkey\", \"Turkey, USA\", \"Turkey\", \"Turk…\n$ Stake_              <chr> \"5.00%\", \"5.00%\", \"NA\", \"NA\", \"NA\", \"NA\", \"10.92%\"…\n$ Deal_Value_USD      <chr> \"100000\", \"250000\", \"NA\", \"120000\", \"100000\", \"100…\n$ Investment_Stage    <chr> \"Seed Stage\", \"Seed Stage\", \"Seed Stage\", \"Seed St…\n\n\nIt can be seen that the “Stake_” and “Deal_Value_USD” columns appear as strings. That’s not good for business.\nLet’s start with the “Deal_Value_USD” column. suppressWarnings used to avoid the warnings for the NaN values.\n\ndf$\"Deal_Value_USD\"<- suppressWarnings(as.integer(df$\"Deal_Value_USD\"))\n\nIt gets a bit cumbersome when it comes to the “Stake_” column. If we were to change it like we did for the first column, we would get NaNs for the values. We can check the values in the column to investigate this problem.\n\ntable(df[\"Stake_\"])\n\nStake_\n  0.46%   1.33%  10.00%  10.42%  10.65% 10.71 % 10.91 %  10.92% 100.00%  11.00% \n      1       1      12       1       1       1       1       1      12       2 \n 11.03% 11.11 %  11.55%  12.00%  12.50% 12.61 %  14.06%  14.28%  14.29%  14.30% \n      1       1       1       1       4       1       1       1       2       1 \n 14.60% 14.71 % 14.91 %  15.00%  15.38%  15.49%  15.50%  15.60%  15.79%  16.13% \n      1       1       1       1       1       1       1       1       1       2 \n  1750%  18.66%  19.99%   2.00%  2.21 %   2.59%  20.00%  20.83%  22.00%  22.73% \n      1       1       1       2       1       1       7       1       1       1 \n 23.50%  24.29%  25.00%  25.23%  28.00%   3.33%   3.38%   3.63%  30.00%  33.33% \n      1       1       2       1       1       2       1       1       1       1 \n 35.00%  35.09%  37.50%  37.70%   4.00%   4.44%   4.75%   5.00%   5.20%   5.67% \n      1       1       1       1       1       1       1      10       1       1 \n 5.81 %   5.88%   5.90%  50.00%   6.00%   6.25%   6.34%  6.51 %   6.60%  60.00% \n      1       2       1       3       2       1       1       1       1       4 \n 69.82%   7.00%   7.14%   7.39%   7.50%   7.69%  75.00%   8.05%   8.08%   8.33% \n      1       1       1       1       1       1       1       1       1       1 \n  8.47%   8.70%  88.89%   9.39%   9.40%  9.91 %      NA \n      2       1       1       1       1       1     157 \n\n\n“%” characters and the white space in some of the cells cause problems. They are removed, and the type is changed. The warnings are suppressed again.\n\ndf$\"Stake_\"<- gsub(\"%\",\"\", df$\"Stake_\") %>% trimws(df$\"Stake_\", which = c(\"both\")) %>% as.numeric(df$\"Stake_\")\nglimpse(df)\n\nRows: 297\nColumns: 9\n$ Target_Company      <chr> \"Abonesepeti\", \"Abrakadabra\", \"Ace Games\", \"Adlema…\n$ Sector              <chr> \"SaaS\", \"Gaming\", \"Gaming\", \"Internet of things\", …\n$ Investor            <chr> \"Keiretsu Forum, Berkan Burla\", \"WePlay Ventures\",…\n$ Announcement_Date   <chr> \"June 2021\", \"December 2021\", \"April 2021\", \"June …\n$ Financial_Investor  <chr> \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"Yes\", \"…\n$ `Investor's_Origin` <chr> \"Turkey\", \"Turkey\", \"Turkey, USA\", \"Turkey\", \"Turk…\n$ Stake_              <dbl> 5.00, 5.00, NA, NA, NA, NA, 10.92, NA, NA, 15.38, …\n$ Deal_Value_USD      <int> 100000, 250000, NA, 120000, 100000, 1000000, 25000…\n$ Investment_Stage    <chr> \"Seed Stage\", \"Seed Stage\", \"Seed Stage\", \"Seed St…"
+  },
+  {
+    "objectID": "assignment1.html#value-by-company",
+    "href": "assignment1.html#value-by-company",
+    "title": "1  Assignment 1",
+    "section": "1.1 Value by Company",
+    "text": "1.1 Value by Company\nThe amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values.\n\ndf_grouped <- df %>%\n  group_by(Target_Company) %>%\n  summarize(Deal_Value_USD = sum(Deal_Value_USD)) %>%\n  arrange(desc(Deal_Value_USD))\n\nkable(head(df_grouped, 10))\n\n\n\n\nTarget_Company\nDeal_Value_USD\n\n\n\n\ntrendyol\n1435000000\n\n\nGetir\n1018000000\n\n\nhepsiburada\n761481000\n\n\nDream Games\n155000050\n\n\nLibra Softworks\n30000000\n\n\nProta\n30000000\n\n\nBluTV\n20800000\n\n\nArvento\n20565000\n\n\nAkinon\n20000000\n\n\nBiotrend Energy\n20000000\n\n\n\n\n\nWe can also visualize these companies and compare them.\nVisualizing so many companies will make the plot unreadable. We can just select the top 5% and feed them to our plot.\nWe first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot.\n\nqu <- quantile(df_grouped$Deal_Value_USD, probs = 0.95, na.rm = TRUE)\n\ndf_grouped %>% filter(Deal_Value_USD >= qu) %>%\n  ggplot(aes(x = reorder(Target_Company, +Deal_Value_USD),y = Deal_Value_USD))+     \n  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust=1)) + \n  ggtitle(\"Total Investments by Company\") +\n  xlab(\"Company\") + ylab(\"Deal Value in USD (Millions)\") + \n  scale_y_continuous(labels = label_number(suffix = \" M\", scale = 1e-6))"
   }
 ]

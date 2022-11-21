@@ -1,12 +1,85 @@
 ---
 title: "Assignment 1"
-date: "2022-10-01"
+date: "`r format(Sys.time(), '%d %B %y')`"
 ---
 
-This is a template example qmd output page. You may see an example R code below.
+## This is the first assignment of the group projects. {-}
 
-```{r}
-set.seed(1)
-vec1 <- sample(LETTERS,5)
-paste0(vec1,collapse="")
+First, the necessary libraries and data are imported.
+
+```{r pack, echo=TRUE, message=FALSE}
+# install.packages("readxl")
+# install.package(kni)
+library(readxl)
+library(knitr)
+library(ggplot2)
+library(dplyr)
+library(scales)
+df <- readxl::read_excel("assignment1/startup_deals_2021.xlsx")
 ```
+
+The problematic characters in the column names are removed to make accessing the columns easier. Then we can get a "glimpse" of our data.
+
+``` {r data}
+names(df) <- gsub("%", "", names(df))
+names(df) <- gsub(" ", "_", names(df))
+names(df) <- gsub("[()]", "", names(df))
+glimpse(df)
+```
+It can be seen that the "Stake_" and "Deal_Value_USD" columns appear as strings. That's not good for business.
+
+Let's start with the "Deal_Value_USD" column. suppressWarnings used to avoid the warnings for the NaN values.
+
+``` {r}
+df$"Deal_Value_USD"<- suppressWarnings(as.integer(df$"Deal_Value_USD"))
+```
+
+It gets a bit cumbersome when it comes to the "Stake_" column. If we were to change it like we did for the first column, we would get NaNs for the values. We can check the values in the column to investigate this problem.
+
+``` {r}
+table(df["Stake_"])
+```
+
+"%" characters and the white space in some of the cells cause problems. They are removed, and the type is changed. The warnings are suppressed again.
+
+``` {r, warning=FALSE}
+df$"Stake_"<- gsub("%","", df$"Stake_") %>% trimws(df$"Stake_", which = c("both")) %>% as.numeric(df$"Stake_")
+glimpse(df)
+```
+
+## Value by Company
+The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values.
+
+``` {r}
+
+df_grouped <- df %>%
+  group_by(Target_Company) %>%
+  summarize(Deal_Value_USD = sum(Deal_Value_USD)) %>%
+  arrange(desc(Deal_Value_USD))
+
+kable(head(df_grouped, 10))
+
+```
+
+We can also visualize these companies and compare them.
+
+Visualizing so many companies will make the plot unreadable. We can just select the top 5% and feed them to our plot.
+
+We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot.
+
+
+``` {r}
+
+qu <- quantile(df_grouped$Deal_Value_USD, probs = 0.95, na.rm = TRUE)
+
+df_grouped %>% filter(Deal_Value_USD >= qu) %>%
+  ggplot(aes(x = reorder(Target_Company, +Deal_Value_USD),y = Deal_Value_USD))+     
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust=1)) + 
+  ggtitle("Total Investments by Company") +
+  xlab("Company") + ylab("Deal Value in USD (Millions)") + 
+  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6))
+
+```
+
+
+
