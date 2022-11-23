@@ -1,11 +1,49 @@
 ---
-title: "Assignment 1"
+title: "Turkish Startups in 2021"
 date: "`r format(Sys.time(), '%d %B %y')`"
+format:
+  html:
+    code-fold: true
+    code-tools: true
 ---
 
-## This is the first assignment of the group projects. {-}
+<style>
+body {
+  font-family: Calibri;
+}
+pre {
+  color: #708090
+}
 
-First, the necessary libraries and data are imported.
+</style>
+
+## Key Takeaways {-}
+
+* The top 3 start-ups with the highest investments in 2021 are:
+    + trendyol
+    + Getir
+    + hepsiburada
+      - 85% of the investments is shared between these companies in 2021.
+
+* The top 3 sectors with the highest investments in 2021 are:
+    + Ecommerce Enabler
+    + Delivery & Logistics
+    + Gaming
+    
+* The sector with the highest median investment is:
+  + Telecom
+  
+* The sector with the highest mean investment is:
+  + Ecommerce Enabler
+  
+  
+* The gaming sector has the highest standard deviation compared to its mean. It is also the sector with the highest company amount which has an effect on the variation.
+
+
+## Data Pre-Processing
+
+To be able to take a look at the data set, the necessary libraries and data 
+should be imported first. 
 
 ```{r pack, echo=TRUE, message=FALSE}
 # install.packages("readxl")
@@ -26,7 +64,8 @@ names(df) <- gsub(" ", "_", names(df))
 names(df) <- gsub("[()]", "", names(df))
 glimpse(df)
 ```
-It can be seen that the "Stake_" and "Deal_Value_USD" columns appear as strings. That's not good for business.
+It can be seen that the "Stake_" and "Deal_Value_USD" columns appear as strings. That's not good for business. If we don't fix this problem, we won't be able to use our numerical data correctly and get false results.
+
 
 Let's start with the "Deal_Value_USD" column. suppressWarnings used to avoid the warnings for the NaN values.
 
@@ -48,16 +87,43 @@ glimpse(df)
 ```
 
 ## Value by Company
-The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values.
+The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values. We can also keep their sector information to observe the distribution. 
+
+Adding or removing sectors when grouping by company should not change the row count because a company's sector should be the same in every record. Yet if we try that, we get different results, which means that there is something wrong in the sector column. Let’s take a closer look.
+
+``` {r}
+table(df["Sector"])
+
+```
+Typos, lower- and upper-case sensitivities, etc. disrupt the pattern. There are also records that show a company in two different sectors. In a larger set, we could remove the whitespace, make every single one of the records lowercase, perform a fuzzy search or similar things, and solve **the majority** of the problems. But this data set is small enough to make manual adjustments. Let’s change them.
+
+``` {r}
+df$Sector[df$Sector == "Artificial intelligence"] <- "Artificial Intelligence"
+df$Sector[df$Sector == "B lockchain"] <- "Blockchain"
+df$Sector[df$Sector == "Cybersec urity"] <- "Cybersecurity"
+df$Sector[df$Sector == "Data analytics"] <- "Data Analytics"
+df$Sector[df$Sector == "Diğital Comparison"] <- "Digital Comparison"
+df$Sector[df$Sector == "Ecommerce enabler"] <- "Ecommerce Enabler"
+df$Sector[df$Sector == "I mage process"] <- "Image Process"
+df$Sector[df$Sector == "Internet of things"] <- "Internet of Things"
+df$Sector[df$Sector == "Telecpm"] <- "Telecom"
+
+df$Sector[df$Target_Company == "ART Labs"] <- "Artificial Intelligence"
+df$Sector[df$Target_Company == "Juphy"] <- "SaaS"
+
+```
+
+
+Now we are ready to get our new dataframe.
 
 ``` {r}
 
-df_grouped <- df %>%
-  group_by(Target_Company) %>%
-  summarize(Deal_Value_USD = sum(Deal_Value_USD)) %>%
-  arrange(desc(Deal_Value_USD))
+suppressMessages(comp_grouped <- df %>%
+  group_by(Target_Company, Sector) %>%
+  summarize(Deal_Value_USD = sum(Deal_Value_USD, na.rm=T))%>%
+  arrange(desc(Deal_Value_USD)))
 
-kable(head(df_grouped, 10))
+kable(head(comp_grouped, 10))
 
 ```
 
@@ -65,21 +131,86 @@ We can also visualize these companies and compare them.
 
 Visualizing so many companies will make the plot unreadable. We can just select the top 5% and feed them to our plot.
 
-We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot.
+We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot. Note that the y axis is in millions.
 
 
 ``` {r}
 
-qu <- quantile(df_grouped$Deal_Value_USD, probs = 0.95, na.rm = TRUE)
+qu <- quantile(comp_grouped$Deal_Value_USD, probs = 0.95, na.rm = TRUE)
 
-df_grouped %>% filter(Deal_Value_USD >= qu) %>%
-  ggplot(aes(x = reorder(Target_Company, +Deal_Value_USD),y = Deal_Value_USD))+     
+comp_grouped %>% filter(Deal_Value_USD >= qu) %>%
+  ggplot(aes(x = reorder(Target_Company, +Deal_Value_USD),y = Deal_Value_USD, 
+             fill = Sector))+ scale_fill_brewer(palette="Set3") +
   geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust=1)) + 
   ggtitle("Total Investments by Company") +
   xlab("Company") + ylab("Deal Value in USD (Millions)") + 
   scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6))
 
 ```
+Three companies that are arguably similar lead the way, with significant differences between their closest competitors. Despite being in the same sector, hepsiburada and trendyol are both in the top 3, which emphasize the share of the Ecommerce sector.
+
+
+## Value by Sector
+
+When it comes to sectors, we can work on similar calculations.
+
+A group by function will be needed again. To see more information, we will also include the number of companies in the sector.
+
+``` {r}
+sum_deal = sum(df$Deal_Value_USD, na.rm = T)
+
+sec_grouped <- df %>%
+  group_by(Sector) %>%
+  summarize(Deal_Value_USD = sum(Deal_Value_USD, na.rm=T), Amount_of_Company = n_distinct(Target_Company))%>%
+  arrange(desc(Deal_Value_USD)) %>%
+  mutate(Investment_Percentage = round(Deal_Value_USD*100 / sum_deal, 2))
+
+kable(head(sec_grouped, 10))
+
+
+```
+
+Ecommerce Enabler companies got more than half of the investments, even when there were only eight of them! Great, let’s start a company called "hepsiburalarda" and be done with it, right? right? Well, not quite.
+
+## Distribution within Sectors
+
+We should investigate how these investments are distributed among companies and collect descriptive statistics on them. There is a plot for such tasks: the boxplot. But almost every sector has its own extreme outliers, and if we were to plot these, we would have to filter several sectors for a readable graph.
+
+``` {r warning=FALSE}
+filtered_df <- df %>% 
+  filter(!Sector %in% c("Ecommerce Enabler", "Delivery & Logistics", "Gaming",
+                        "SaaS", "Fintech", "Marketplace", "Mobility", "Media",
+                        "Energy", "Telecom", "Deeptech", "Education",
+                        "Agritech", "Proptech", "Vitamins & Supplements",
+                        "Foodtech", "Healthtech"))
+  
+ggplot(filtered_df, aes(x=Sector, y=Deal_Value_USD)) + 
+  geom_boxplot() +  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6)) + theme(axis.text.x = element_text(angle = 45, hjust=1))
+
+```
+
+So, the boxplot did not come to our aid this time. We will calculate the descriptive statistics instead. Sectors with only one sample are excluded.
+
+``` {r warning=FALSE}
+summed_df <- df %>%                    
+  group_by(Sector) %>% 
+  summarize(Mean = mean(Deal_Value_USD, na.rm =TRUE),
+            Median = median(Deal_Value_USD, na.rm =TRUE),
+            Standard_Dev = sd(Deal_Value_USD, na.rm =TRUE),
+            Min = min(Deal_Value_USD, na.rm =TRUE),
+            Quantile1 = quantile(Deal_Value_USD, 0.25, na.rm =TRUE),
+            Quantile3 = quantile(Deal_Value_USD, 0.75, na.rm =TRUE),
+            Max = max(Deal_Value_USD,na.rm =TRUE),
+            Amount_of_Company = n_distinct(Target_Company)) %>%
+  
+  filter(,!is.na(Standard_Dev)) %>%
+  mutate(Coefficient_of_Variation = Standard_Dev / Mean) %>%
+  arrange(desc(Median))
+
+kable(head(summed_df))
+
+```
 
 
 
+This was the final step of our EDA. We ran fundamental analyses on such an exciting data set.

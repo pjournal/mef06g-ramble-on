@@ -15,6 +15,7 @@ Each section is an assignment or an individual work.
 + [Gizem Çınar](https://github.com/pjournal/mef06-ggizemcinar)
 + [Tayyip Sinan Ocaktan](https://github.com/pjournal/mef06-ocaktans/)
 
+
 <!-- 
 
 # Group Project Details

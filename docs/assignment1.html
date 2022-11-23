@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-11-21">
+<meta name="dcterms.date" content="2022-11-24">
 
-<title>Ramble On’s Progress Journal - 1&nbsp; Assignment 1</title>
+<title>Ramble On’s Progress Journal - 1&nbsp; Turkish Startups in 2021</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Assignment 1</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Turkish Startups in 2021</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -181,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./assignment1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Assignment 1</span></a>
+  <a href="./assignment1.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Turkish Startups in 2021</span></a>
   </div>
 </li>
     </ul>
@@ -193,8 +193,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#this-is-the-first-assignment-of-the-group-projects." id="toc-this-is-the-first-assignment-of-the-group-projects." class="nav-link active" data-scroll-target="#this-is-the-first-assignment-of-the-group-projects.">This is the first assignment of the group projects.</a></li>
-  <li><a href="#value-by-company" id="toc-value-by-company" class="nav-link" data-scroll-target="#value-by-company"><span class="toc-section-number">1.1</span>  Value by Company</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link active" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#data-pre-processing" id="toc-data-pre-processing" class="nav-link" data-scroll-target="#data-pre-processing"><span class="toc-section-number">1.1</span>  Data Pre-Processing</a></li>
+  <li><a href="#value-by-company" id="toc-value-by-company" class="nav-link" data-scroll-target="#value-by-company"><span class="toc-section-number">1.2</span>  Value by Company</a></li>
+  <li><a href="#value-by-sector" id="toc-value-by-sector" class="nav-link" data-scroll-target="#value-by-sector"><span class="toc-section-number">1.3</span>  Value by Sector</a></li>
+  <li><a href="#distribution-within-sectors" id="toc-distribution-within-sectors" class="nav-link" data-scroll-target="#distribution-within-sectors"><span class="toc-section-number">1.4</span>  Distribution within Sectors</a></li>
   </ul>
 </nav>
     </div>
@@ -203,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Assignment 1</span></h1>
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Turkish Startups in 2021</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -214,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 21, 2022</p>
+      <p class="date">November 24, 2022</p>
     </div>
   </div>
     
@@ -223,10 +226,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="this-is-the-first-assignment-of-the-group-projects." class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="this-is-the-first-assignment-of-the-group-projects.">This is the first assignment of the group projects.</h2>
-<p>First, the necessary libraries and data are imported.</p>
+<style>
+body {
+  font-family: Calibri;
+}
+pre {
+  color: #708090
+}
+
+</style>
+<section id="key-takeaways" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>The top 3 start-ups with the highest investments in 2021 are:
+<ul>
+<li>trendyol</li>
+<li>Getir</li>
+<li>hepsiburada
+<ul>
+<li>85% of the investments is shared between these companies in 2021.</li>
+</ul></li>
+</ul></li>
+<li>The top 3 sectors with the highest investments in 2021 are:
+<ul>
+<li>Ecommerce Enabler</li>
+<li>Delivery &amp; Logistics</li>
+<li>Gaming</li>
+</ul></li>
+<li>The sector with the highest median investment is:
+<ul>
+<li>Telecom</li>
+</ul></li>
+<li>The sector with the highest mean investment is:
+<ul>
+<li>Ecommerce Enabler</li>
+</ul></li>
+<li>The gaming sector has the highest standard deviation compared to its mean. It is also the sector with the highest company amount which has an effect on the variation.</li>
+</ul>
+</section>
+<section id="data-pre-processing" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="data-pre-processing"><span class="header-section-number">1.1</span> Data Pre-Processing</h2>
+<p>To be able to take a look at the data set, the necessary libraries and data should be imported first.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("readxl")</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package(kni)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
@@ -235,13 +278,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"assignment1/startup_deals_2021.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>The problematic characters in the column names are removed to make accessing the columns easier. Then we can get a “glimpse” of our data.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"%"</span>, <span class="st">""</span>, <span class="fu">names</span>(df))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">names</span>(df))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[()]"</span>, <span class="st">""</span>, <span class="fu">names</span>(df))</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 297
 Columns: 9
@@ -256,14 +303,20 @@ $ Deal_Value_USD      &lt;chr&gt; "100000", "250000", "NA", "120000", "100000", 
 $ Investment_Stage    &lt;chr&gt; "Seed Stage", "Seed Stage", "Seed Stage", "Seed St…</code></pre>
 </div>
 </div>
-<p>It can be seen that the “Stake_” and “Deal_Value_USD” columns appear as strings. That’s not good for business.</p>
+<p>It can be seen that the “Stake_” and “Deal_Value_USD” columns appear as strings. That’s not good for business. If we don’t fix this problem, we won’t be able to use our numerical data correctly and get false results.</p>
 <p>Let’s start with the “Deal_Value_USD” column. suppressWarnings used to avoid the warnings for the NaN values.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"Deal_Value_USD"</span><span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.integer</span>(df<span class="sc">$</span><span class="st">"Deal_Value_USD"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>It gets a bit cumbersome when it comes to the “Stake_” column. If we were to change it like we did for the first column, we would get NaNs for the values. We can check the values in the column to investigate this problem.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[<span class="st">"Stake_"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Stake_
   0.46%   1.33%  10.00%  10.42%  10.65% 10.71 % 10.91 %  10.92% 100.00%  11.00% 
@@ -288,8 +341,11 @@ $ Investment_Stage    &lt;chr&gt; "Seed Stage", "Seed Stage", "Seed Stage", "See
 </div>
 <p>“%” characters and the white space in some of the cells cause problems. They are removed, and the type is changed. The warnings are suppressed again.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"Stake_"</span><span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"%"</span>,<span class="st">""</span>, df<span class="sc">$</span><span class="st">"Stake_"</span>) <span class="sc">%&gt;%</span> <span class="fu">trimws</span>(df<span class="sc">$</span><span class="st">"Stake_"</span>, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"both"</span>)) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(df<span class="sc">$</span><span class="st">"Stake_"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 297
 Columns: 9
@@ -305,63 +361,136 @@ $ Investment_Stage    &lt;chr&gt; "Seed Stage", "Seed Stage", "Seed Stage", "See
 </div>
 </div>
 </section>
-<section id="value-by-company" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="value-by-company"><span class="header-section-number">1.1</span> Value by Company</h2>
-<p>The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values.</p>
+<section id="value-by-company" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="value-by-company"><span class="header-section-number">1.2</span> Value by Company</h2>
+<p>The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values. We can also keep their sector information to observe the distribution.</p>
+<p>Adding or removing sectors when grouping by company should not change the row count because a company’s sector should be the same in every record. Yet if we try that, we get different results, which means that there is something wrong in the sector column. Let’s take a closer look.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Target_Company) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Deal_Value_USD =</span> <span class="fu">sum</span>(Deal_Value_USD)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Deal_Value_USD))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(df_grouped, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[<span class="st">"Sector"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sector
+            3D Printing      Advanced materials             Advertising 
+                      3                       1                       2 
+               Agritech Artificial intelligence Artificial Intelligence 
+                      8                      11                       3 
+      Augmented Reality            Aviationtech             B lockchain 
+                      2                       1                       4 
+                Biotech                    Book          Cybersec urity 
+                      6                       1                       1 
+          Cybersecurity          Data analytics          Data Analytics 
+                      4                       2                       1 
+               Deeptech    Delivery &amp; Logistics      Diğital Comparison 
+                     11                      13                       1 
+      Ecommerce enabler       Ecommerce Enabler               Education 
+                      8                       1                       6 
+                 Energy                 Fintech                Foodtech 
+                      3                      23                       9 
+                 Gaming              Healthtech                  HRTech 
+                     51                      14                       6 
+         I mage process      Internet of things           Marketingtech 
+                      1                       5                       6 
+            Marketplace                   Media                Mobility 
+                     17                      12                       8 
+               Proptech                Research              Retailtech 
+                      1                       1                       3 
+               Robotics                    SaaS                  Sports 
+                      3                      28                       5 
+                Telecom                 Telecpm          Transportation 
+                      3                       1                       1 
+                 Travel              Visiontech  Vitamins &amp; Supplements 
+                      4                       1                       1 </code></pre>
+</div>
+</div>
+<p>Typos, lower- and upper-case sensitivities, etc. disrupt the pattern. There are also records that show a company in two different sectors. In a larger set, we could remove the whitespace, make every single one of the records lowercase, perform a fuzzy search or similar things, and solve <strong>the majority</strong> of the problems. But this data set is small enough to make manual adjustments. Let’s change them.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Artificial intelligence"</span>] <span class="ot">&lt;-</span> <span class="st">"Artificial Intelligence"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"B lockchain"</span>] <span class="ot">&lt;-</span> <span class="st">"Blockchain"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Cybersec urity"</span>] <span class="ot">&lt;-</span> <span class="st">"Cybersecurity"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Data analytics"</span>] <span class="ot">&lt;-</span> <span class="st">"Data Analytics"</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Diğital Comparison"</span>] <span class="ot">&lt;-</span> <span class="st">"Digital Comparison"</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Ecommerce enabler"</span>] <span class="ot">&lt;-</span> <span class="st">"Ecommerce Enabler"</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"I mage process"</span>] <span class="ot">&lt;-</span> <span class="st">"Image Process"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Internet of things"</span>] <span class="ot">&lt;-</span> <span class="st">"Internet of Things"</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Telecpm"</span>] <span class="ot">&lt;-</span> <span class="st">"Telecom"</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Target_Company <span class="sc">==</span> <span class="st">"ART Labs"</span>] <span class="ot">&lt;-</span> <span class="st">"Artificial Intelligence"</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Target_Company <span class="sc">==</span> <span class="st">"Juphy"</span>] <span class="ot">&lt;-</span> <span class="st">"SaaS"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Now we are ready to get our new dataframe.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(comp_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Target_Company, Sector) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Deal_Value_USD =</span> <span class="fu">sum</span>(Deal_Value_USD, <span class="at">na.rm=</span>T))<span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Deal_Value_USD)))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(comp_grouped, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Target_Company</th>
+<th style="text-align: left;">Sector</th>
 <th style="text-align: right;">Deal_Value_USD</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">trendyol</td>
+<td style="text-align: left;">Ecommerce Enabler</td>
 <td style="text-align: right;">1435000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Getir</td>
+<td style="text-align: left;">Delivery &amp; Logistics</td>
 <td style="text-align: right;">1018000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">hepsiburada</td>
+<td style="text-align: left;">Ecommerce Enabler</td>
 <td style="text-align: right;">761481000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Dream Games</td>
+<td style="text-align: left;">Gaming</td>
 <td style="text-align: right;">155000050</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Libra Softworks</td>
+<td style="text-align: left;">Gaming</td>
 <td style="text-align: right;">30000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Prota</td>
+<td style="text-align: left;">SaaS</td>
 <td style="text-align: right;">30000000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">BluTV</td>
+<td style="text-align: left;">Media</td>
 <td style="text-align: right;">20800000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Arvento</td>
+<td style="text-align: left;">SaaS</td>
 <td style="text-align: right;">20565000</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Akinon</td>
+<td style="text-align: left;">Ecommerce Enabler</td>
 <td style="text-align: right;">20000000</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Biotrend Energy</td>
+<td style="text-align: left;">Energy</td>
 <td style="text-align: right;">20000000</td>
 </tr>
 </tbody>
@@ -370,21 +499,276 @@ $ Investment_Stage    &lt;chr&gt; "Seed Stage", "Seed Stage", "Seed Stage", "See
 </div>
 <p>We can also visualize these companies and compare them.</p>
 <p>Visualizing so many companies will make the plot unreadable. We can just select the top 5% and feed them to our plot.</p>
-<p>We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot.</p>
+<p>We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot. Note that the y axis is in millions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>qu <span class="ot">&lt;-</span> <span class="fu">quantile</span>(df_grouped<span class="sc">$</span>Deal_Value_USD, <span class="at">probs =</span> <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>df_grouped <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Deal_Value_USD <span class="sc">&gt;=</span> qu) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Target_Company, <span class="sc">+</span>Deal_Value_USD),<span class="at">y =</span> Deal_Value_USD))<span class="sc">+</span>     </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Investments by Company"</span>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Company"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Deal Value in USD (Millions)"</span>) <span class="sc">+</span> </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">" M"</span>, <span class="at">scale =</span> <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>qu <span class="ot">&lt;-</span> <span class="fu">quantile</span>(comp_grouped<span class="sc">$</span>Deal_Value_USD, <span class="at">probs =</span> <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>comp_grouped <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Deal_Value_USD <span class="sc">&gt;=</span> qu) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Target_Company, <span class="sc">+</span>Deal_Value_USD),<span class="at">y =</span> Deal_Value_USD, </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> Sector))<span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"Set3"</span>) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Investments by Company"</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Company"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Deal Value in USD (Millions)"</span>) <span class="sc">+</span> </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">" M"</span>, <span class="at">scale =</span> <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<p><img src="assignment1_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="assignment1_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Three companies that are arguably similar lead the way, with significant differences between their closest competitors. Despite being in the same sector, hepsiburada and trendyol are both in the top 3, which emphasize the share of the Ecommerce sector.</p>
+</section>
+<section id="value-by-sector" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="value-by-sector"><span class="header-section-number">1.3</span> Value by Sector</h2>
+<p>When it comes to sectors, we can work on similar calculations.</p>
+<p>A group by function will be needed again. To see more information, we will also include the number of companies in the sector.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sum_deal <span class="ot">=</span> <span class="fu">sum</span>(df<span class="sc">$</span>Deal_Value_USD, <span class="at">na.rm =</span> T)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sec_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sector) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Deal_Value_USD =</span> <span class="fu">sum</span>(Deal_Value_USD, <span class="at">na.rm=</span>T), <span class="at">Amount_of_Company =</span> <span class="fu">n_distinct</span>(Target_Company))<span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Deal_Value_USD)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Investment_Percentage =</span> <span class="fu">round</span>(Deal_Value_USD<span class="sc">*</span><span class="dv">100</span> <span class="sc">/</span> sum_deal, <span class="dv">2</span>))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sec_grouped, <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 19%">
+<col style="width: 23%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sector</th>
+<th style="text-align: right;">Deal_Value_USD</th>
+<th style="text-align: right;">Amount_of_Company</th>
+<th style="text-align: right;">Investment_Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ecommerce Enabler</td>
+<td style="text-align: right;">2221235634</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">58.78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Delivery &amp; Logistics</td>
+<td style="text-align: right;">1027811561</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">27.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gaming</td>
+<td style="text-align: right;">221235284</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">5.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SaaS</td>
+<td style="text-align: right;">84157048</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2.23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fintech</td>
+<td style="text-align: right;">28894578</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0.76</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Marketplace</td>
+<td style="text-align: right;">26477315</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0.70</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mobility</td>
+<td style="text-align: right;">25905560</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Media</td>
+<td style="text-align: right;">21759000</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Energy</td>
+<td style="text-align: right;">21608314</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.57</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Deeptech</td>
+<td style="text-align: right;">16357491</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0.43</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Ecommerce Enabler companies got more than half of the investments, even when there were only eight of them! Great, let’s start a company called “hepsiburalarda” and be done with it, right? right? Well, not quite.</p>
+</section>
+<section id="distribution-within-sectors" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="distribution-within-sectors"><span class="header-section-number">1.4</span> Distribution within Sectors</h2>
+<p>We should investigate how these investments are distributed among companies and collect descriptive statistics on them. There is a plot for such tasks: the boxplot. But almost every sector has its own extreme outliers, and if we were to plot these, we would have to filter several sectors for a readable graph.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Sector <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ecommerce Enabler"</span>, <span class="st">"Delivery &amp; Logistics"</span>, <span class="st">"Gaming"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"SaaS"</span>, <span class="st">"Fintech"</span>, <span class="st">"Marketplace"</span>, <span class="st">"Mobility"</span>, <span class="st">"Media"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Energy"</span>, <span class="st">"Telecom"</span>, <span class="st">"Deeptech"</span>, <span class="st">"Education"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Agritech"</span>, <span class="st">"Proptech"</span>, <span class="st">"Vitamins &amp; Supplements"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Foodtech"</span>, <span class="st">"Healthtech"</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_df, <span class="fu">aes</span>(<span class="at">x=</span>Sector, <span class="at">y=</span>Deal_Value_USD)) <span class="sc">+</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">" M"</span>, <span class="at">scale =</span> <span class="fl">1e-6</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="assignment1_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>So, the boxplot did not come to our aid this time. We will calculate the descriptive statistics instead. Sectors with only one sample are excluded.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>summed_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span>                    </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sector) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">Median =</span> <span class="fu">median</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">Standard_Dev =</span> <span class="fu">sd</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Min =</span> <span class="fu">min</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">Quantile1 =</span> <span class="fu">quantile</span>(Deal_Value_USD, <span class="fl">0.25</span>, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">Quantile3 =</span> <span class="fu">quantile</span>(Deal_Value_USD, <span class="fl">0.75</span>, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">Max =</span> <span class="fu">max</span>(Deal_Value_USD,<span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">Amount_of_Company =</span> <span class="fu">n_distinct</span>(Target_Company)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(,<span class="sc">!</span><span class="fu">is.na</span>(Standard_Dev)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Coefficient_of_Variation =</span> Standard_Dev <span class="sc">/</span> Mean) <span class="sc">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Median))</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(summed_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sector</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Standard_Dev</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Quantile1</th>
+<th style="text-align: right;">Quantile3</th>
+<th style="text-align: right;">Max</th>
+<th style="text-align: right;">Amount_of_Company</th>
+<th style="text-align: right;">Coefficient_of_Variation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Telecom</td>
+<td style="text-align: right;">3085875.0</td>
+<td style="text-align: right;">1546750</td>
+<td style="text-align: right;">4303515.8</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">82625.0</td>
+<td style="text-align: right;">4550000</td>
+<td style="text-align: right;">9.200e+06</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1.3945853</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Energy</td>
+<td style="text-align: right;">7202771.3</td>
+<td style="text-align: right;">1400000</td>
+<td style="text-align: right;">11098730.8</td>
+<td style="text-align: right;">208314</td>
+<td style="text-align: right;">804157.0</td>
+<td style="text-align: right;">10700000</td>
+<td style="text-align: right;">2.000e+07</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.5408973</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ecommerce Enabler</td>
+<td style="text-align: right;">246803959.3</td>
+<td style="text-align: right;">1103361</td>
+<td style="text-align: right;">511282193.7</td>
+<td style="text-align: right;">50000</td>
+<td style="text-align: right;">376800.0</td>
+<td style="text-align: right;">20000000</td>
+<td style="text-align: right;">1.435e+09</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2.0716126</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Delivery &amp; Logistics</td>
+<td style="text-align: right;">79062427.8</td>
+<td style="text-align: right;">1000000</td>
+<td style="text-align: right;">166933603.5</td>
+<td style="text-align: right;">55000</td>
+<td style="text-align: right;">365264.0</td>
+<td style="text-align: right;">35000000</td>
+<td style="text-align: right;">5.550e+08</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2.1114151</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mobility</td>
+<td style="text-align: right;">3700794.3</td>
+<td style="text-align: right;">1000000</td>
+<td style="text-align: right;">5707703.7</td>
+<td style="text-align: right;">139400</td>
+<td style="text-align: right;">383080.0</td>
+<td style="text-align: right;">4000000</td>
+<td style="text-align: right;">1.600e+07</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1.5422915</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Robotics</td>
+<td style="text-align: right;">807422.3</td>
+<td style="text-align: right;">900000</td>
+<td style="text-align: right;">683584.4</td>
+<td style="text-align: right;">82267</td>
+<td style="text-align: right;">491133.5</td>
+<td style="text-align: right;">1170000</td>
+<td style="text-align: right;">1.440e+06</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.8466256</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This was the final step of our EDA. We ran fundamental analyses on such an exciting data set.</p>
 
+
+<!-- -->
 
 </section>
 
@@ -437,6 +821,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -495,7 +930,224 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Turkish Startups in 2021"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r format(Sys.time(), '%d %B %y')`"</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;style&gt;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>body {</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">font-family</span>: Calibri<span class="op">;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>pre {</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">color</span>: <span class="cn">#708090</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/style&gt;</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Takeaways {-}</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The top 3 start-ups with the highest investments in 2021 are:</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>trendyol</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>Getir</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>hepsiburada</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a><span class="ss">      - </span>85% of the investments is shared between these companies in 2021.</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The top 3 sectors with the highest investments in 2021 are:</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>Ecommerce Enabler</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>Delivery &amp; Logistics</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>Gaming</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The sector with the highest median investment is:</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="ss">  + </span>Telecom</span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The sector with the highest mean investment is:</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a><span class="ss">  + </span>Ecommerce Enabler</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>The gaming sector has the highest standard deviation compared to its mean. It is also the sector with the highest company amount which has an effect on the variation.</span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Pre-Processing</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>To be able to take a look at the data set, the necessary libraries and data </span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>should be imported first. </span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r pack, echo=TRUE, message=FALSE}</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("readxl")</span></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package(kni)</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="st">"assignment1/startup_deals_2021.xlsx"</span>)</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>The problematic characters in the column names are removed to make accessing the columns easier. Then we can get a "glimpse" of our data.</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r data}</span></span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"%"</span>, <span class="st">""</span>, <span class="fu">names</span>(df))</span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, <span class="fu">names</span>(df))</span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[()]"</span>, <span class="st">""</span>, <span class="fu">names</span>(df))</span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>It can be seen that the "Stake_" and "Deal_Value_USD" columns appear as strings. That's not good for business. If we don't fix this problem, we won't be able to use our numerical data correctly and get false results.</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>Let's start with the "Deal_Value_USD" column. suppressWarnings used to avoid the warnings for the NaN values.</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"Deal_Value_USD"</span><span class="ot">&lt;-</span> <span class="fu">suppressWarnings</span>(<span class="fu">as.integer</span>(df<span class="sc">$</span><span class="st">"Deal_Value_USD"</span>))</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>It gets a bit cumbersome when it comes to the "Stake_" column. If we were to change it like we did for the first column, we would get NaNs for the values. We can check the values in the column to investigate this problem.</span>
+<span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[<span class="st">"Stake_"</span>])</span>
+<span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>"%" characters and the white space in some of the cells cause problems. They are removed, and the type is changed. The warnings are suppressed again.</span>
+<span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r, warning=FALSE}</span></span>
+<span id="cb17-85"><a href="#cb17-85" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span><span class="st">"Stake_"</span><span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"%"</span>,<span class="st">""</span>, df<span class="sc">$</span><span class="st">"Stake_"</span>) <span class="sc">%&gt;%</span> <span class="fu">trimws</span>(df<span class="sc">$</span><span class="st">"Stake_"</span>, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">"both"</span>)) <span class="sc">%&gt;%</span> <span class="fu">as.numeric</span>(df<span class="sc">$</span><span class="st">"Stake_"</span>)</span>
+<span id="cb17-86"><a href="#cb17-86" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span>
+<span id="cb17-87"><a href="#cb17-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-88"><a href="#cb17-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-89"><a href="#cb17-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Value by Company</span></span>
+<span id="cb17-90"><a href="#cb17-90" aria-hidden="true" tabindex="-1"></a>The amount of investment received by companies can be examined as the first analysis. To do so, we should group the data set by company name and sum the deal values. We can also keep their sector information to observe the distribution. </span>
+<span id="cb17-91"><a href="#cb17-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-92"><a href="#cb17-92" aria-hidden="true" tabindex="-1"></a>Adding or removing sectors when grouping by company should not change the row count because a company's sector should be the same in every record. Yet if we try that, we get different results, which means that there is something wrong in the sector column. Let’s take a closer look.</span>
+<span id="cb17-93"><a href="#cb17-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-94"><a href="#cb17-94" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-95"><a href="#cb17-95" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(df[<span class="st">"Sector"</span>])</span>
+<span id="cb17-96"><a href="#cb17-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-97"><a href="#cb17-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-98"><a href="#cb17-98" aria-hidden="true" tabindex="-1"></a>Typos, lower- and upper-case sensitivities, etc. disrupt the pattern. There are also records that show a company in two different sectors. In a larger set, we could remove the whitespace, make every single one of the records lowercase, perform a fuzzy search or similar things, and solve **the majority** of the problems. But this data set is small enough to make manual adjustments. Let’s change them.</span>
+<span id="cb17-99"><a href="#cb17-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-100"><a href="#cb17-100" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-101"><a href="#cb17-101" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Artificial intelligence"</span>] <span class="ot">&lt;-</span> <span class="st">"Artificial Intelligence"</span></span>
+<span id="cb17-102"><a href="#cb17-102" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"B lockchain"</span>] <span class="ot">&lt;-</span> <span class="st">"Blockchain"</span></span>
+<span id="cb17-103"><a href="#cb17-103" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Cybersec urity"</span>] <span class="ot">&lt;-</span> <span class="st">"Cybersecurity"</span></span>
+<span id="cb17-104"><a href="#cb17-104" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Data analytics"</span>] <span class="ot">&lt;-</span> <span class="st">"Data Analytics"</span></span>
+<span id="cb17-105"><a href="#cb17-105" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Diğital Comparison"</span>] <span class="ot">&lt;-</span> <span class="st">"Digital Comparison"</span></span>
+<span id="cb17-106"><a href="#cb17-106" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Ecommerce enabler"</span>] <span class="ot">&lt;-</span> <span class="st">"Ecommerce Enabler"</span></span>
+<span id="cb17-107"><a href="#cb17-107" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"I mage process"</span>] <span class="ot">&lt;-</span> <span class="st">"Image Process"</span></span>
+<span id="cb17-108"><a href="#cb17-108" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Internet of things"</span>] <span class="ot">&lt;-</span> <span class="st">"Internet of Things"</span></span>
+<span id="cb17-109"><a href="#cb17-109" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Sector <span class="sc">==</span> <span class="st">"Telecpm"</span>] <span class="ot">&lt;-</span> <span class="st">"Telecom"</span></span>
+<span id="cb17-110"><a href="#cb17-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-111"><a href="#cb17-111" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Target_Company <span class="sc">==</span> <span class="st">"ART Labs"</span>] <span class="ot">&lt;-</span> <span class="st">"Artificial Intelligence"</span></span>
+<span id="cb17-112"><a href="#cb17-112" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Sector[df<span class="sc">$</span>Target_Company <span class="sc">==</span> <span class="st">"Juphy"</span>] <span class="ot">&lt;-</span> <span class="st">"SaaS"</span></span>
+<span id="cb17-113"><a href="#cb17-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-114"><a href="#cb17-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-115"><a href="#cb17-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-116"><a href="#cb17-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-117"><a href="#cb17-117" aria-hidden="true" tabindex="-1"></a>Now we are ready to get our new dataframe.</span>
+<span id="cb17-118"><a href="#cb17-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-119"><a href="#cb17-119" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-120"><a href="#cb17-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-121"><a href="#cb17-121" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(comp_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb17-122"><a href="#cb17-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Target_Company, Sector) <span class="sc">%&gt;%</span></span>
+<span id="cb17-123"><a href="#cb17-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Deal_Value_USD =</span> <span class="fu">sum</span>(Deal_Value_USD, <span class="at">na.rm=</span>T))<span class="sc">%&gt;%</span></span>
+<span id="cb17-124"><a href="#cb17-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Deal_Value_USD)))</span>
+<span id="cb17-125"><a href="#cb17-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-126"><a href="#cb17-126" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(comp_grouped, <span class="dv">10</span>))</span>
+<span id="cb17-127"><a href="#cb17-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-128"><a href="#cb17-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-129"><a href="#cb17-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-130"><a href="#cb17-130" aria-hidden="true" tabindex="-1"></a>We can also visualize these companies and compare them.</span>
+<span id="cb17-131"><a href="#cb17-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-132"><a href="#cb17-132" aria-hidden="true" tabindex="-1"></a>Visualizing so many companies will make the plot unreadable. We can just select the top 5% and feed them to our plot.</span>
+<span id="cb17-133"><a href="#cb17-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-134"><a href="#cb17-134" aria-hidden="true" tabindex="-1"></a>We first calculate the value for the filter, then add it to the code, and then we sort the bars according to the values. Next, we insert the elements of the plot. Note that the y axis is in millions.</span>
+<span id="cb17-135"><a href="#cb17-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-136"><a href="#cb17-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-137"><a href="#cb17-137" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-138"><a href="#cb17-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-139"><a href="#cb17-139" aria-hidden="true" tabindex="-1"></a>qu <span class="ot">&lt;-</span> <span class="fu">quantile</span>(comp_grouped<span class="sc">$</span>Deal_Value_USD, <span class="at">probs =</span> <span class="fl">0.95</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-140"><a href="#cb17-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-141"><a href="#cb17-141" aria-hidden="true" tabindex="-1"></a>comp_grouped <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Deal_Value_USD <span class="sc">&gt;=</span> qu) <span class="sc">%&gt;%</span></span>
+<span id="cb17-142"><a href="#cb17-142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Target_Company, <span class="sc">+</span>Deal_Value_USD),<span class="at">y =</span> Deal_Value_USD, </span>
+<span id="cb17-143"><a href="#cb17-143" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> Sector))<span class="sc">+</span> <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"Set3"</span>) <span class="sc">+</span></span>
+<span id="cb17-144"><a href="#cb17-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb17-145"><a href="#cb17-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Investments by Company"</span>) <span class="sc">+</span></span>
+<span id="cb17-146"><a href="#cb17-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Company"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Deal Value in USD (Millions)"</span>) <span class="sc">+</span> </span>
+<span id="cb17-147"><a href="#cb17-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">" M"</span>, <span class="at">scale =</span> <span class="fl">1e-6</span>))</span>
+<span id="cb17-148"><a href="#cb17-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-149"><a href="#cb17-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-150"><a href="#cb17-150" aria-hidden="true" tabindex="-1"></a>Three companies that are arguably similar lead the way, with significant differences between their closest competitors. Despite being in the same sector, hepsiburada and trendyol are both in the top 3, which emphasize the share of the Ecommerce sector.</span>
+<span id="cb17-151"><a href="#cb17-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-152"><a href="#cb17-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-153"><a href="#cb17-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Value by Sector</span></span>
+<span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a>When it comes to sectors, we can work on similar calculations.</span>
+<span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a>A group by function will be needed again. To see more information, we will also include the number of companies in the sector.</span>
+<span id="cb17-158"><a href="#cb17-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-159"><a href="#cb17-159" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r}</span></span>
+<span id="cb17-160"><a href="#cb17-160" aria-hidden="true" tabindex="-1"></a>sum_deal <span class="ot">=</span> <span class="fu">sum</span>(df<span class="sc">$</span>Deal_Value_USD, <span class="at">na.rm =</span> T)</span>
+<span id="cb17-161"><a href="#cb17-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-162"><a href="#cb17-162" aria-hidden="true" tabindex="-1"></a>sec_grouped <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb17-163"><a href="#cb17-163" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sector) <span class="sc">%&gt;%</span></span>
+<span id="cb17-164"><a href="#cb17-164" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Deal_Value_USD =</span> <span class="fu">sum</span>(Deal_Value_USD, <span class="at">na.rm=</span>T), <span class="at">Amount_of_Company =</span> <span class="fu">n_distinct</span>(Target_Company))<span class="sc">%&gt;%</span></span>
+<span id="cb17-165"><a href="#cb17-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Deal_Value_USD)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-166"><a href="#cb17-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Investment_Percentage =</span> <span class="fu">round</span>(Deal_Value_USD<span class="sc">*</span><span class="dv">100</span> <span class="sc">/</span> sum_deal, <span class="dv">2</span>))</span>
+<span id="cb17-167"><a href="#cb17-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-168"><a href="#cb17-168" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sec_grouped, <span class="dv">10</span>))</span>
+<span id="cb17-169"><a href="#cb17-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-170"><a href="#cb17-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-171"><a href="#cb17-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-172"><a href="#cb17-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-173"><a href="#cb17-173" aria-hidden="true" tabindex="-1"></a>Ecommerce Enabler companies got more than half of the investments, even when there were only eight of them! Great, let’s start a company called "hepsiburalarda" and be done with it, right? right? Well, not quite.</span>
+<span id="cb17-174"><a href="#cb17-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-175"><a href="#cb17-175" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribution within Sectors</span></span>
+<span id="cb17-176"><a href="#cb17-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-177"><a href="#cb17-177" aria-hidden="true" tabindex="-1"></a>We should investigate how these investments are distributed among companies and collect descriptive statistics on them. There is a plot for such tasks: the boxplot. But almost every sector has its own extreme outliers, and if we were to plot these, we would have to filter several sectors for a readable graph.</span>
+<span id="cb17-178"><a href="#cb17-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-179"><a href="#cb17-179" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r warning=FALSE}</span></span>
+<span id="cb17-180"><a href="#cb17-180" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb17-181"><a href="#cb17-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Sector <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Ecommerce Enabler"</span>, <span class="st">"Delivery &amp; Logistics"</span>, <span class="st">"Gaming"</span>,</span>
+<span id="cb17-182"><a href="#cb17-182" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"SaaS"</span>, <span class="st">"Fintech"</span>, <span class="st">"Marketplace"</span>, <span class="st">"Mobility"</span>, <span class="st">"Media"</span>,</span>
+<span id="cb17-183"><a href="#cb17-183" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Energy"</span>, <span class="st">"Telecom"</span>, <span class="st">"Deeptech"</span>, <span class="st">"Education"</span>,</span>
+<span id="cb17-184"><a href="#cb17-184" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Agritech"</span>, <span class="st">"Proptech"</span>, <span class="st">"Vitamins &amp; Supplements"</span>,</span>
+<span id="cb17-185"><a href="#cb17-185" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Foodtech"</span>, <span class="st">"Healthtech"</span>))</span>
+<span id="cb17-186"><a href="#cb17-186" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-187"><a href="#cb17-187" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_df, <span class="fu">aes</span>(<span class="at">x=</span>Sector, <span class="at">y=</span>Deal_Value_USD)) <span class="sc">+</span> </span>
+<span id="cb17-188"><a href="#cb17-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">label_number</span>(<span class="at">suffix =</span> <span class="st">" M"</span>, <span class="at">scale =</span> <span class="fl">1e-6</span>)) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span>
+<span id="cb17-189"><a href="#cb17-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-190"><a href="#cb17-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-191"><a href="#cb17-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-192"><a href="#cb17-192" aria-hidden="true" tabindex="-1"></a>So, the boxplot did not come to our aid this time. We will calculate the descriptive statistics instead. Sectors with only one sample are excluded.</span>
+<span id="cb17-193"><a href="#cb17-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-194"><a href="#cb17-194" aria-hidden="true" tabindex="-1"></a><span class="in">``` {r warning=FALSE}</span></span>
+<span id="cb17-195"><a href="#cb17-195" aria-hidden="true" tabindex="-1"></a>summed_df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span>                    </span>
+<span id="cb17-196"><a href="#cb17-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sector) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-197"><a href="#cb17-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-198"><a href="#cb17-198" aria-hidden="true" tabindex="-1"></a>            <span class="at">Median =</span> <span class="fu">median</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-199"><a href="#cb17-199" aria-hidden="true" tabindex="-1"></a>            <span class="at">Standard_Dev =</span> <span class="fu">sd</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-200"><a href="#cb17-200" aria-hidden="true" tabindex="-1"></a>            <span class="at">Min =</span> <span class="fu">min</span>(Deal_Value_USD, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-201"><a href="#cb17-201" aria-hidden="true" tabindex="-1"></a>            <span class="at">Quantile1 =</span> <span class="fu">quantile</span>(Deal_Value_USD, <span class="fl">0.25</span>, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-202"><a href="#cb17-202" aria-hidden="true" tabindex="-1"></a>            <span class="at">Quantile3 =</span> <span class="fu">quantile</span>(Deal_Value_USD, <span class="fl">0.75</span>, <span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-203"><a href="#cb17-203" aria-hidden="true" tabindex="-1"></a>            <span class="at">Max =</span> <span class="fu">max</span>(Deal_Value_USD,<span class="at">na.rm =</span><span class="cn">TRUE</span>),</span>
+<span id="cb17-204"><a href="#cb17-204" aria-hidden="true" tabindex="-1"></a>            <span class="at">Amount_of_Company =</span> <span class="fu">n_distinct</span>(Target_Company)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-205"><a href="#cb17-205" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-206"><a href="#cb17-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(,<span class="sc">!</span><span class="fu">is.na</span>(Standard_Dev)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-207"><a href="#cb17-207" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Coefficient_of_Variation =</span> Standard_Dev <span class="sc">/</span> Mean) <span class="sc">%&gt;%</span></span>
+<span id="cb17-208"><a href="#cb17-208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Median))</span>
+<span id="cb17-209"><a href="#cb17-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-210"><a href="#cb17-210" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(summed_df))</span>
+<span id="cb17-211"><a href="#cb17-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-212"><a href="#cb17-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb17-213"><a href="#cb17-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-214"><a href="#cb17-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-215"><a href="#cb17-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-216"><a href="#cb17-216" aria-hidden="true" tabindex="-1"></a>This was the final step of our EDA. We ran fundamental analyses on such an exciting data set.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
