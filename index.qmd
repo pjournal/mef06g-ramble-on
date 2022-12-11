@@ -1,3 +1,12 @@
+<style>
+body {
+  font-family: Calibri;
+}
+pre {
+  color: #708090
+}
+
+</style>
 # Introduction {.unnumbered}
 
 <!-- DO NOT TOUCH THIS PART EXCEPT FILLING YOUR OR YOUR GROUP's NAME -->
