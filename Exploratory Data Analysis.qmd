@@ -1,0 +1,183 @@
+---
+title: "Exploratory Data Analysis" 
+date: "`r format(Sys.time(), '%d %B %y')`"
+format:
+  html:
+    code-fold: true
+    code-tools: true
+---
+
+```{=html}
+<style>
+body {
+  font-family: Calibri;
+}
+pre {
+  color: #708090
+}
+
+</style>
+```
+## Necessary libraries
+
+```{r}
+
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+```
+
+## 
+
+We are going to analyze the changes of touristic activities according to pandemic. As we mention in our project proposal we are going to make this analysis with scope of spending behaviors, nationality changes and why tourists came to Turkey.
+
+## Spending Behavior Analysis
+
+First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long did tourists stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter.
+
+```{r}
+
+library(readxl)
+income_nights <- read_excel("term_project/income_nights.xlsx")
+income_months <- read_excel("term_project/income_months.xlsx")
+
+income_n1 <- filter(income_nights, Quarter %in% c("Anual"))
+
+ggplot(income_n1, aes(Year)) + 
+  geom_line(aes(y = Tourism_expenditure_in_ThousandDollars, colour = "Tourism expenditure in ThousandDollars")) + 
+  geom_line(aes(y = Tourism_Income_in_ThousandDollars, colour = "Tourism Income in ThousandDollars"))
+
+
+```
+As we see from this graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit.
+
+```{r}
+
+
+
+
+
+```
+
+
+When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period.
+
+
+## Nationatilty Changes
+
+In this section we will analyze the changes in nationality visit to Turkey as a tourist. With this analysis, we will try to analyze whether there is a difference before and after the pandemic? For this analysis we are going to use depart_by_residence dataset.
+
+```{r}
+
+nationality <- read_excel("term_project/depart_by_residence.xlsx")
+
+
+```
+
+## Reasons to come
+
+In this section we will analyze the reasons to come Turkey as a turist how change in years. With respect to pandemic effect we can say that
+
+
+Health or Medical Reasons vs Total Touristic Activities; 
+
+```{r}
+
+reasons_to_come <- read_excel("term_project/purposes.xlsx")
+
+reasons_1 <- filter(reasons_to_come, Quarter %in% "Annual")
+
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Health_or_medical_reasons, colour = "Health or Medical Reasons"))
+
+
+```
+
+
+
+As we can see there is no difference in health or medical purpose in total touristic activities over the years. 
+In the above we will examine same analysis for all purposes. And later we will come to outcome
+
+
+Cultural Activities vs. Total Turistic Activities; 
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Travel_entertainment_sportive_or_cultural_activities, colour = "Cultural Activites"))
+
+```
+
+
+Family and Friends Visiting vs. Total Turistic Activities
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Visiting_relatives_and_friends, colour = "Family and Friends Visiting"))
+
+```
+
+
+Education Purpose vs. Total Turistic Activities
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Education_training, colour = "Education Purpose"))
+
+```
+
+
+Religion Purposes vs. Total Turistic Activities;
+
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Religion_Pilgrimag, colour = "Religion Purposes"))
+
+```
+
+
+Shopping Purposes vs. Total Turistic Activities
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Shoppin, colour = "Shopping Purposes"))
+
+```
+
+
+Business Purposes vs. Total Turistic Activities
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Business, colour = "Business Purposes"))
+
+```
+
+
+Other Reasons vs. Total Turistic Activities
+```{r}
+
+ggplot(reasons_1, aes(Year)) + 
+  geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
+  geom_line(aes(y = ALL_Other, colour = "Other Reasons"))
+
+```
+
+
+After examine all the reasons vs total turistic activities we can see that after 2020 - whis is the start of pandemic - total visitors came to Turkey is much more little than other years. Also we can clearly see the cultural activities visiting whic include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities. 
+
+
+
+
+
+
