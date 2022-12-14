@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-12-12">
+<meta name="dcterms.date" content="2022-12-14">
 
 <title>Ramble On’s Progress Journal - 3&nbsp; Exploratory Data Analysis</title>
 <style>
@@ -123,6 +123,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 </head>
@@ -227,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 12, 2022</p>
+      <p class="date">December 14, 2022</p>
     </div>
   </div>
     
@@ -266,7 +274,40 @@ pre {
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'reshape2'
+
+The following object is masked from 'package:tidyr':
+
+    smiths</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'plotly'
+
+The following object is masked from 'package:ggplot2':
+
+    last_plot
+
+The following object is masked from 'package:stats':
+
+    filter
+
+The following object is masked from 'package:graphics':
+
+    layout</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -277,28 +318,73 @@ pre {
 <section id="spending-behavior-analysis" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="spending-behavior-analysis"><span class="header-section-number">3.3</span> Spending Behavior Analysis</h2>
 <p>First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long did tourists stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter.</p>
+<p>First let check how many visitors came to Turkey over the years.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>income_nights <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_nights.xlsx"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>income_months <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_months.xlsx"</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>income_n1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(income_nights, Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Anual"</span>))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_n1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_expenditure_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism expenditure in ThousandDollars"</span>)) <span class="sc">+</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_Income_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism Income in ThousandDollars"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>income_nights <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_nights.xlsx"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>income_months <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_months.xlsx"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#income_n1$Tourism_Income_in_ThousandDollars = ifelse(is.na(income_n1$Tourism_Income_in_ThousandDollars), ave(income_n1$Tourism_Income_in_ThousandDollars, FUN = function(x) mean(x, na.rm = TRUE)), income_n1$Tourism_Income_in_ThousandDollars)# deneme amaçlı 2022 annual değeri doldurma fonksiyonu ? </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>income_n1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(income_nights, Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Anual"</span>))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_n1, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Number_of_Departing_Visitors, <span class="at">fill=</span>Year)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>As we see from this graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit.</p>
+<p>When we look at the graph, the sharp decrease in the number of tourists in 2020 and 2021 can be seen. If we want to look closely in 2020 and 2021 month by month the graphic shows that</p>
 <div class="cell">
-
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>income_m1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(income_months, Months <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>,<span class="st">"September"</span>,<span class="st">"October"</span>,<span class="st">"November"</span>,<span class="st">"December"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_m1, <span class="fu">aes</span>(<span class="at">x =</span> Months, <span class="at">y =</span> Number_of_Visitors_2020, <span class="at">fill=</span>Months)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_m1, <span class="fu">aes</span>(<span class="at">x =</span> Months, <span class="at">y =</span> Number_of_Visitors_2021, <span class="at">fill=</span>Months)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 <p>When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_n1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_expenditure_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism expenditure in ThousandDollars"</span>)) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_Income_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism Income in ThousandDollars"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As we see from above graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> income_n1 <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Tourism_expenditure_in_ThousandDollars, Tourism_Income_in_ThousandDollars, <span class="at">size =</span> Year, <span class="at">color =</span> Year)) <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="htmlwidget-92330031c4a0d856419f" style="width:100%;height:464px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-92330031c4a0d856419f">{"x":{"data":[{"x":[4593389.87057248,5253564.76620356,5470481.37744917,5698422.95070841,5049793.34821906,5137243.74851718,4896310.14958495,4403669.63496959,1104544.80031337,1851921.77497692,0],"y":[29689248.6163233,33073502.0202542,35137949.163742,32492211.9776449,22839468.2148947,27044542.2543255,30545923.6038596,38930473.601,14817273.344,30173587.454,0],"text":["Tourism_expenditure_in_ThousandDollars: 4593390<br />Tourism_Income_in_ThousandDollars: 29689249<br />Year: 2012<br />Year: 2012","Tourism_expenditure_in_ThousandDollars: 5253565<br />Tourism_Income_in_ThousandDollars: 33073502<br />Year: 2013<br />Year: 2013","Tourism_expenditure_in_ThousandDollars: 5470481<br />Tourism_Income_in_ThousandDollars: 35137949<br />Year: 2014<br />Year: 2014","Tourism_expenditure_in_ThousandDollars: 5698423<br />Tourism_Income_in_ThousandDollars: 32492212<br />Year: 2015<br />Year: 2015","Tourism_expenditure_in_ThousandDollars: 5049793<br />Tourism_Income_in_ThousandDollars: 22839468<br />Year: 2016<br />Year: 2016","Tourism_expenditure_in_ThousandDollars: 5137244<br />Tourism_Income_in_ThousandDollars: 27044542<br />Year: 2017<br />Year: 2017","Tourism_expenditure_in_ThousandDollars: 4896310<br />Tourism_Income_in_ThousandDollars: 30545924<br />Year: 2018<br />Year: 2018","Tourism_expenditure_in_ThousandDollars: 4403670<br />Tourism_Income_in_ThousandDollars: 38930474<br />Year: 2019<br />Year: 2019","Tourism_expenditure_in_ThousandDollars: 1104545<br />Tourism_Income_in_ThousandDollars: 14817273<br />Year: 2020<br />Year: 2020","Tourism_expenditure_in_ThousandDollars: 1851922<br />Tourism_Income_in_ThousandDollars: 30173587<br />Year: 2021<br />Year: 2021","Tourism_expenditure_in_ThousandDollars:       0<br />Tourism_Income_in_ThousandDollars:        0<br />Year: 2022<br />Year: 2022"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":["rgba(19,43,67,1)","rgba(25,55,83,1)","rgba(31,67,100,1)","rgba(38,80,117,1)","rgba(44,93,134,1)","rgba(51,106,152,1)","rgba(58,120,170,1)","rgba(65,134,189,1)","rgba(72,148,208,1)","rgba(79,162,227,1)","rgba(86,177,247,1)"],"opacity":1,"size":[3.77952755905512,9.75548534205048,12.2308081039362,14.1301900630898,15.7314431250458,17.1421753925017,18.4175748518076,19.5904256982817,20.6820886488173,21.7074009080412,22.6771653543307],"symbol":"circle","line":{"width":1.88976377952756,"color":["rgba(19,43,67,1)","rgba(25,55,83,1)","rgba(31,67,100,1)","rgba(38,80,117,1)","rgba(44,93,134,1)","rgba(51,106,152,1)","rgba(58,120,170,1)","rgba(65,134,189,1)","rgba(72,148,208,1)","rgba(79,162,227,1)","rgba(86,177,247,1)"]}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0],"y":[0],"name":"99_72dd4356f4cedc08d0de9deeed74fed5","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#132B43"],[0.00334448160535885,"#132B44"],[0.00668896321069496,"#132C44"],[0.0100334448160538,"#142C45"],[0.0133779264214127,"#142D45"],[0.0167224080267488,"#142D46"],[0.0200668896321076,"#142D46"],[0.0234113712374665,"#142E47"],[0.0267558528428026,"#152E47"],[0.0301003344481614,"#152F48"],[0.0334448160535203,"#152F48"],[0.0367892976588564,"#152F49"],[0.0401337792642153,"#153049"],[0.0434782608695741,"#16304A"],[0.0468227424749102,"#16304A"],[0.0501672240802691,"#16314B"],[0.0535117056856279,"#16314B"],[0.056856187290964,"#16324C"],[0.0602006688963229,"#17324D"],[0.0635451505016817,"#17324D"],[0.0668896321070179,"#17334E"],[0.0702341137123767,"#17334E"],[0.0735785953177356,"#17344F"],[0.0769230769230717,"#18344F"],[0.0802675585284305,"#183450"],[0.0836120401337894,"#183550"],[0.0869565217391255,"#183551"],[0.0903010033444843,"#183651"],[0.0936454849498432,"#193652"],[0.0969899665551793,"#193652"],[0.100334448160538,"#193753"],[0.103678929765897,"#193754"],[0.107023411371233,"#193854"],[0.110367892976592,"#1A3855"],[0.113712374581951,"#1A3955"],[0.117056856187287,"#1A3956"],[0.120401337792646,"#1A3956"],[0.123745819398005,"#1A3A57"],[0.127090301003341,"#1B3A57"],[0.1304347826087,"#1B3B58"],[0.133779264214036,"#1B3B59"],[0.137123745819395,"#1B3B59"],[0.140468227424753,"#1C3C5A"],[0.14381270903009,"#1C3C5A"],[0.147157190635448,"#1C3D5B"],[0.150501672240807,"#1C3D5B"],[0.153846153846143,"#1C3D5C"],[0.157190635451502,"#1D3E5C"],[0.160535117056861,"#1D3E5D"],[0.163879598662197,"#1D3F5D"],[0.167224080267556,"#1D3F5E"],[0.170568561872915,"#1D3F5F"],[0.173913043478251,"#1E405F"],[0.17725752508361,"#1E4060"],[0.180602006688969,"#1E4160"],[0.183946488294305,"#1E4161"],[0.187290969899664,"#1E4261"],[0.190635451505023,"#1F4262"],[0.193979933110359,"#1F4263"],[0.197324414715717,"#1F4363"],[0.200668896321076,"#1F4364"],[0.204013377926412,"#1F4464"],[0.207357859531771,"#204465"],[0.21070234113713,"#204465"],[0.214046822742466,"#204566"],[0.217391304347825,"#204566"],[0.220735785953184,"#214667"],[0.22408026755852,"#214668"],[0.227424749163879,"#214768"],[0.230769230769238,"#214769"],[0.234113712374574,"#214769"],[0.237458193979933,"#22486A"],[0.240802675585292,"#22486A"],[0.244147157190628,"#22496B"],[0.247491638795987,"#22496C"],[0.250836120401345,"#224A6C"],[0.254180602006682,"#234A6D"],[0.25752508361204,"#234A6D"],[0.260869565217399,"#234B6E"],[0.264214046822735,"#234B6E"],[0.267558528428094,"#244C6F"],[0.270903010033453,"#244C70"],[0.274247491638789,"#244C70"],[0.277591973244148,"#244D71"],[0.280936454849507,"#244D71"],[0.284280936454843,"#254E72"],[0.287625418060202,"#254E72"],[0.290969899665561,"#254F73"],[0.294314381270897,"#254F74"],[0.297658862876256,"#254F74"],[0.301003344481614,"#265075"],[0.304347826086951,"#265075"],[0.307692307692309,"#265176"],[0.311036789297668,"#265176"],[0.314381270903004,"#275277"],[0.317725752508363,"#275278"],[0.321070234113722,"#275278"],[0.324414715719058,"#275379"],[0.327759197324417,"#275379"],[0.331103678929776,"#28547A"],[0.334448160535112,"#28547B"],[0.337792642140471,"#28557B"],[0.34113712374583,"#28557C"],[0.344481605351166,"#28567C"],[0.347826086956525,"#29567D"],[0.351170568561884,"#29567D"],[0.35451505016722,"#29577E"],[0.357859531772579,"#29577F"],[0.361204013377937,"#2A587F"],[0.364548494983273,"#2A5880"],[0.367892976588632,"#2A5980"],[0.371237458193991,"#2A5981"],[0.374581939799327,"#2A5982"],[0.377926421404686,"#2B5A82"],[0.381270903010022,"#2B5A83"],[0.384615384615381,"#2B5B83"],[0.38795986622074,"#2B5B84"],[0.391304347826076,"#2C5C85"],[0.394648829431435,"#2C5C85"],[0.397993311036794,"#2C5D86"],[0.40133779264213,"#2C5D86"],[0.404682274247489,"#2C5D87"],[0.408026755852848,"#2D5E87"],[0.411371237458184,"#2D5E88"],[0.414715719063543,"#2D5F89"],[0.418060200668901,"#2D5F89"],[0.421404682274238,"#2E608A"],[0.424749163879596,"#2E608A"],[0.428093645484955,"#2E618B"],[0.431438127090291,"#2E618C"],[0.43478260869565,"#2E618C"],[0.438127090301009,"#2F628D"],[0.441471571906345,"#2F628D"],[0.444816053511704,"#2F638E"],[0.448160535117063,"#2F638F"],[0.451505016722399,"#30648F"],[0.454849498327758,"#306490"],[0.458193979933117,"#306590"],[0.461538461538453,"#306591"],[0.464882943143812,"#306592"],[0.468227424749171,"#316692"],[0.471571906354507,"#316693"],[0.474916387959865,"#316793"],[0.478260869565224,"#316794"],[0.48160535117056,"#326895"],[0.484949832775919,"#326895"],[0.488294314381278,"#326996"],[0.491638795986614,"#326996"],[0.494983277591973,"#326997"],[0.498327759197332,"#336A98"],[0.501672240802668,"#336A98"],[0.505016722408027,"#336B99"],[0.508361204013386,"#336B99"],[0.511705685618722,"#346C9A"],[0.515050167224081,"#346C9B"],[0.51839464882944,"#346D9B"],[0.521739130434776,"#346D9C"],[0.525083612040135,"#346E9D"],[0.528428093645493,"#356E9D"],[0.53177257525083,"#356E9E"],[0.535117056856188,"#356F9E"],[0.538461538461547,"#356F9F"],[0.541806020066883,"#3670A0"],[0.545150501672242,"#3670A0"],[0.548494983277601,"#3671A1"],[0.551839464882937,"#3671A1"],[0.555183946488296,"#3772A2"],[0.558528428093655,"#3772A3"],[0.561872909698991,"#3773A3"],[0.56521739130435,"#3773A4"],[0.568561872909709,"#3773A4"],[0.571906354515045,"#3874A5"],[0.575250836120404,"#3874A6"],[0.578595317725762,"#3875A6"],[0.581939799331099,"#3875A7"],[0.585284280936457,"#3976A8"],[0.588628762541816,"#3976A8"],[0.591973244147152,"#3977A9"],[0.595317725752511,"#3977A9"],[0.59866220735787,"#3978AA"],[0.602006688963206,"#3A78AB"],[0.605351170568565,"#3A79AB"],[0.608695652173924,"#3A79AC"],[0.61204013377926,"#3A79AC"],[0.615384615384619,"#3B7AAD"],[0.618729096989978,"#3B7AAE"],[0.622073578595314,"#3B7BAE"],[0.625418060200673,"#3B7BAF"],[0.628762541806009,"#3C7CB0"],[0.632107023411368,"#3C7CB0"],[0.635451505016727,"#3C7DB1"],[0.638795986622063,"#3C7DB1"],[0.642140468227421,"#3C7EB2"],[0.64548494983278,"#3D7EB3"],[0.648829431438116,"#3D7FB3"],[0.652173913043475,"#3D7FB4"],[0.655518394648834,"#3D7FB5"],[0.65886287625417,"#3E80B5"],[0.662207357859529,"#3E80B6"],[0.665551839464888,"#3E81B6"],[0.668896321070224,"#3E81B7"],[0.672240802675583,"#3F82B8"],[0.675585284280942,"#3F82B8"],[0.678929765886278,"#3F83B9"],[0.682274247491637,"#3F83BA"],[0.685618729096996,"#4084BA"],[0.688963210702332,"#4084BB"],[0.692307692307691,"#4085BB"],[0.695652173913049,"#4085BC"],[0.698996655518386,"#4086BD"],[0.702341137123744,"#4186BD"],[0.705685618729103,"#4186BE"],[0.709030100334439,"#4187BF"],[0.712374581939798,"#4187BF"],[0.715719063545157,"#4288C0"],[0.719063545150493,"#4288C1"],[0.722408026755852,"#4289C1"],[0.725752508361211,"#4289C2"],[0.729096989966547,"#438AC2"],[0.732441471571906,"#438AC3"],[0.735785953177265,"#438BC4"],[0.739130434782601,"#438BC4"],[0.74247491638796,"#438CC5"],[0.745819397993319,"#448CC6"],[0.749163879598655,"#448DC6"],[0.752508361204013,"#448DC7"],[0.755852842809372,"#448EC8"],[0.759197324414708,"#458EC8"],[0.762541806020067,"#458FC9"],[0.765886287625426,"#458FC9"],[0.769230769230762,"#458FCA"],[0.772575250836121,"#4690CB"],[0.77591973244148,"#4690CB"],[0.779264214046816,"#4691CC"],[0.782608695652175,"#4691CD"],[0.785953177257534,"#4792CD"],[0.78929765886287,"#4792CE"],[0.792642140468229,"#4793CF"],[0.795986622073588,"#4793CF"],[0.799331103678924,"#4894D0"],[0.802675585284283,"#4894D0"],[0.806020066889641,"#4895D1"],[0.809364548494978,"#4895D2"],[0.812709030100336,"#4896D2"],[0.816053511705695,"#4996D3"],[0.819397993311031,"#4997D4"],[0.82274247491639,"#4997D4"],[0.826086956521749,"#4998D5"],[0.829431438127085,"#4A98D6"],[0.832775919732444,"#4A99D6"],[0.836120401337803,"#4A99D7"],[0.839464882943139,"#4A9AD8"],[0.842809364548498,"#4B9AD8"],[0.846153846153857,"#4B9BD9"],[0.849498327759193,"#4B9BDA"],[0.852842809364552,"#4B9BDA"],[0.85618729096991,"#4C9CDB"],[0.859531772575247,"#4C9CDB"],[0.862876254180605,"#4C9DDC"],[0.866220735785964,"#4C9DDD"],[0.8695652173913,"#4D9EDD"],[0.872909698996659,"#4D9EDE"],[0.876254180602018,"#4D9FDF"],[0.879598662207354,"#4D9FDF"],[0.882943143812713,"#4DA0E0"],[0.886287625418049,"#4EA0E1"],[0.889632107023408,"#4EA1E1"],[0.892976588628767,"#4EA1E2"],[0.896321070234103,"#4EA2E3"],[0.899665551839462,"#4FA2E3"],[0.903010033444821,"#4FA3E4"],[0.906354515050157,"#4FA3E5"],[0.909698996655516,"#4FA4E5"],[0.913043478260875,"#50A4E6"],[0.916387959866211,"#50A5E7"],[0.91973244147157,"#50A5E7"],[0.923076923076928,"#50A6E8"],[0.926421404682264,"#51A6E8"],[0.929765886287623,"#51A7E9"],[0.933110367892982,"#51A7EA"],[0.936454849498318,"#51A8EA"],[0.939799331103677,"#52A8EB"],[0.943143812709036,"#52A9EC"],[0.946488294314372,"#52A9EC"],[0.949832775919731,"#52AAED"],[0.95317725752509,"#53AAEE"],[0.956521739130426,"#53ABEE"],[0.959866220735785,"#53ABEF"],[0.963210702341144,"#53ACF0"],[0.96655518394648,"#54ACF0"],[0.969899665551839,"#54ADF1"],[0.973244147157197,"#54ADF2"],[0.976588628762533,"#54AEF2"],[0.979933110367892,"#55AEF3"],[0.983277591973251,"#55AFF4"],[0.986622073578587,"#55AFF4"],[0.989966555183946,"#55B0F5"],[0.993311036789305,"#56B0F6"],[0.996655518394641,"#56B1F6"],[1,"#56B1F7"]],"colorbar":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"thickness":23.04,"title":"Year","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickmode":"array","ticktext":["2012","2014","2016","2018","2020","2022"],"tickvals":[0,0.2,0.4,0.6,0.8,1],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":54.7945205479452},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-284921.14753542,5983344.09824383],"tickmode":"array","ticktext":["0e+00","2e+06","4e+06"],"tickvals":[0,2000000,4000000],"categoryorder":"array","categoryarray":["0e+00","2e+06","4e+06"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Tourism_expenditure_in_ThousandDollars","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1946523.68005,40876997.28105],"tickmode":"array","ticktext":["0e+00","1e+07","2e+07","3e+07","4e+07"],"tickvals":[0,10000000,20000000,30000000,40000000],"categoryorder":"array","categoryarray":["0e+00","1e+07","2e+07","3e+07","4e+07"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Tourism_Income_in_ThousandDollars","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"Year","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"187b30674deb":{"x":{},"y":{},"size":{},"colour":{},"type":"scatter"}},"cur_data":"187b30674deb","visdat":{"187b30674deb":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
 <section id="nationatilty-changes" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="nationatilty-changes"><span class="header-section-number">3.4</span> Nationatilty Changes</h2>
@@ -306,116 +392,167 @@ pre {
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nationality <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/depart_by_residence.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>residence <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/depart_by_residence.xlsx"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#colnames(residence) &lt;- c('Nationality', 'Year_2012', 'Year_2013', 'Year_2014', 'Year_2015', 'Year_2015', 'Year_2016', 'Year_2017', 'Year_2018', 'Year_2019',  'Year_2020', 'Year_2021')</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(residence, aes(x=" ", y=Year_2020, fill = Nationality)) + geom_bar(stat = "identity")</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>residence_new <span class="ot">&lt;-</span> <span class="fu">melt</span>(residence, <span class="at">id =</span> <span class="st">"Nationality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="reasons-to-come" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="reasons-to-come"><span class="header-section-number">3.5</span> Reasons to come</h2>
 <p>In this section we will analyze the reasons to come Turkey as a turist how change in years. With respect to pandemic effect we can say that</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>reasons_to_come <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/purposes.xlsx"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>reasons_quarter <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"I"</span>, <span class="st">"II"</span>, <span class="st">"III"</span>, <span class="st">"IV"</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_quarter, <span class="fu">aes</span>(<span class="at">x=</span> Year, <span class="at">y=</span> ALL_Total, <span class="at">fill =</span> Quarter))<span class="sc">+</span><span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>Health or Medical Reasons vs Total Touristic Activities;</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>reasons_to_come <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/purposes.xlsx"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>reasons_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="st">"Annual"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Health_or_medical_reasons, <span class="at">colour =</span> <span class="st">"Health or Medical Reasons"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>reasons_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="st">"Annual"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Health_or_medical_reasons, <span class="at">colour =</span> <span class="st">"Health or Medical Reasons"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>As we can see there is no difference in health or medical purpose in total touristic activities over the years. In the above we will examine same analysis for all purposes. And later we will come to outcome</p>
+<p>As we can see there is no difference in health or medical purpose in total touristic activities over the years.</p>
+<p>In the above we will examine same analysis for all purposes. And later we will come to outcome for this section.</p>
 <p>Cultural Activities vs.&nbsp;Total Turistic Activities;</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Travel_entertainment_sportive_or_cultural_activities, <span class="at">colour =</span> <span class="st">"Cultural Activites"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Travel_entertainment_sportive_or_cultural_activities, <span class="at">colour =</span> <span class="st">"Cultural Activites"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Family and Friends Visiting vs.&nbsp;Total Turistic Activities</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Visiting_relatives_and_friends, <span class="at">colour =</span> <span class="st">"Family and Friends Visiting"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Visiting_relatives_and_friends, <span class="at">colour =</span> <span class="st">"Family and Friends Visiting"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Education Purpose vs.&nbsp;Total Turistic Activities</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Education_training, <span class="at">colour =</span> <span class="st">"Education Purpose"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Education_training, <span class="at">colour =</span> <span class="st">"Education Purpose"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Religion Purposes vs.&nbsp;Total Turistic Activities;</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Religion_Pilgrimag, <span class="at">colour =</span> <span class="st">"Religion Purposes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Religion_Pilgrimag, <span class="at">colour =</span> <span class="st">"Religion Purposes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Shopping Purposes vs.&nbsp;Total Turistic Activities</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Shoppin, <span class="at">colour =</span> <span class="st">"Shopping Purposes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Shoppin, <span class="at">colour =</span> <span class="st">"Shopping Purposes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Business Purposes vs.&nbsp;Total Turistic Activities</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Business, <span class="at">colour =</span> <span class="st">"Business Purposes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Business, <span class="at">colour =</span> <span class="st">"Business Purposes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Other Reasons vs.&nbsp;Total Turistic Activities</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Other, <span class="at">colour =</span> <span class="st">"Other Reasons"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Other, <span class="at">colour =</span> <span class="st">"Other Reasons"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>After examine all the reasons vs total turistic activities we can see that after 2020 - whis is the start of pandemic - total visitors came to Turkey is much more little than other years. Also we can clearly see the cultural activities visiting whic include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities.</p>
+<p>After examine all the reasons vs total turistic activities we can see that after 2020 - which is the start of pandemic - total visitors came to Turkey is much more little than other years. Also we can clearly see the cultural activities visiting which include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>reasons_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="st">"Annual"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_to_come, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y=</span> ALL_Total, <span class="at">fill =</span> Quarter)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>These values inclued all touristics acitivities, so if a turkish citizen came to Turkey as touristic purposes this dataset includes all of them. If we want to see all TR activities in all touristic activities we can look graph below;</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> TR_Total, <span class="at">colour =</span> <span class="st">"TR Total Activities"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Exploratory-Data-Analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As we can see this graphic the TR visitors who came to Turket as a touristic acitivities is almost same over the year but in 2020 - with pandemic restrictions - the visitors number is decreased very fast.</p>
+<p>If we want to look all activities in pie chart for see the distrubition of all in 2019, 2020, 2021 for quarter and annual base;</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="do">##pie chart - - - - </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
 <!-- -->
@@ -581,172 +718,254 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-next">
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Exploratory Data Analysis" </span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r format(Sys.time(), '%d %B %y')`"</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style&gt;</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="in">body {</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="in">  font-family: Calibri;</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="in">pre {</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="in">  color: #708090</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Necessary libraries</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## </span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>We are going to analyze the changes of touristic activities according to pandemic. As we mention in our project proposal we are going to make this analysis with scope of spending behaviors, nationality changes and why tourists came to Turkey.</span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spending Behavior Analysis</span></span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long did tourists stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter.</span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>income_nights <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_nights.xlsx"</span>)</span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>income_months <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_months.xlsx"</span>)</span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>income_n1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(income_nights, Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Anual"</span>))</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_n1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_expenditure_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism expenditure in ThousandDollars"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_Income_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism Income in ThousandDollars"</span>))</span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>As we see from this graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit.</span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period.</span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nationatilty Changes</span></span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>In this section we will analyze the changes in nationality visit to Turkey as a tourist. With this analysis, we will try to analyze whether there is a difference before and after the pandemic? For this analysis we are going to use depart_by_residence dataset.</span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>nationality <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/depart_by_residence.xlsx"</span>)</span>
-<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reasons to come</span></span>
-<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>In this section we will analyze the reasons to come Turkey as a turist how change in years. With respect to pandemic effect we can say that</span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>Health or Medical Reasons vs Total Touristic Activities; </span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>reasons_to_come <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/purposes.xlsx"</span>)</span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>reasons_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="st">"Annual"</span>)</span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Health_or_medical_reasons, <span class="at">colour =</span> <span class="st">"Health or Medical Reasons"</span>))</span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>As we can see there is no difference in health or medical purpose in total touristic activities over the years. </span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>In the above we will examine same analysis for all purposes. And later we will come to outcome</span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>Cultural Activities vs. Total Turistic Activities; </span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Travel_entertainment_sportive_or_cultural_activities, <span class="at">colour =</span> <span class="st">"Cultural Activites"</span>))</span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>Family and Friends Visiting vs. Total Turistic Activities</span>
-<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Visiting_relatives_and_friends, <span class="at">colour =</span> <span class="st">"Family and Friends Visiting"</span>))</span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>Education Purpose vs. Total Turistic Activities</span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Education_training, <span class="at">colour =</span> <span class="st">"Education Purpose"</span>))</span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>Religion Purposes vs. Total Turistic Activities;</span>
-<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Religion_Pilgrimag, <span class="at">colour =</span> <span class="st">"Religion Purposes"</span>))</span>
-<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>Shopping Purposes vs. Total Turistic Activities</span>
-<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Shoppin, <span class="at">colour =</span> <span class="st">"Shopping Purposes"</span>))</span>
-<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>Business Purposes vs. Total Turistic Activities</span>
-<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Business, <span class="at">colour =</span> <span class="st">"Business Purposes"</span>))</span>
-<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>Other Reasons vs. Total Turistic Activities</span>
-<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
-<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
-<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Other, <span class="at">colour =</span> <span class="st">"Other Reasons"</span>))</span>
-<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a>After examine all the reasons vs total turistic activities we can see that after 2020 - whis is the start of pandemic - total visitors came to Turkey is much more little than other years. Also we can clearly see the cultural activities visiting whic include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities. </span>
-<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb26" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Exploratory Data Analysis" </span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "`r format(Sys.time(), '%d %B %y')`"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;style&gt;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="in">body {</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="in">  font-family: Calibri;</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="in">pre {</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="in">  color: #708090</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;/style&gt;</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Necessary libraries</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## </span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>We are going to analyze the changes of touristic activities according to pandemic. As we mention in our project proposal we are going to make this analysis with scope of spending behaviors, nationality changes and why tourists came to Turkey.</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spending Behavior Analysis</span></span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long did tourists stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter.</span>
+<span id="cb26-44"><a href="#cb26-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-45"><a href="#cb26-45" aria-hidden="true" tabindex="-1"></a>First let check how many visitors came to Turkey over the years. </span>
+<span id="cb26-48"><a href="#cb26-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-49"><a href="#cb26-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb26-50"><a href="#cb26-50" aria-hidden="true" tabindex="-1"></a>income_nights <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_nights.xlsx"</span>)</span>
+<span id="cb26-51"><a href="#cb26-51" aria-hidden="true" tabindex="-1"></a>income_months <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/income_months.xlsx"</span>)</span>
+<span id="cb26-52"><a href="#cb26-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-53"><a href="#cb26-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-54"><a href="#cb26-54" aria-hidden="true" tabindex="-1"></a><span class="co">#income_n1$Tourism_Income_in_ThousandDollars = ifelse(is.na(income_n1$Tourism_Income_in_ThousandDollars), ave(income_n1$Tourism_Income_in_ThousandDollars, FUN = function(x) mean(x, na.rm = TRUE)), income_n1$Tourism_Income_in_ThousandDollars)# deneme amaçlı 2022 annual değeri doldurma fonksiyonu ? </span></span>
+<span id="cb26-55"><a href="#cb26-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-56"><a href="#cb26-56" aria-hidden="true" tabindex="-1"></a>income_n1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(income_nights, Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Anual"</span>))</span>
+<span id="cb26-57"><a href="#cb26-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-58"><a href="#cb26-58" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_n1, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Number_of_Departing_Visitors, <span class="at">fill=</span>Year)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span> )</span>
+<span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a>When we look at the graph, the sharp decrease in the number of tourists in 2020 and 2021 can be seen. If we want to look closely in 2020 and 2021 month by month the graphic shows that  </span>
+<span id="cb26-63"><a href="#cb26-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-66"><a href="#cb26-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-67"><a href="#cb26-67" aria-hidden="true" tabindex="-1"></a>income_m1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(income_months, Months <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"January"</span>, <span class="st">"February"</span>, <span class="st">"March"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"June"</span>, <span class="st">"July"</span>, <span class="st">"August"</span>,<span class="st">"September"</span>,<span class="st">"October"</span>,<span class="st">"November"</span>,<span class="st">"December"</span>))</span>
+<span id="cb26-68"><a href="#cb26-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-69"><a href="#cb26-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-70"><a href="#cb26-70" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_m1, <span class="fu">aes</span>(<span class="at">x =</span> Months, <span class="at">y =</span> Number_of_Visitors_2020, <span class="at">fill=</span>Months)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span>
+<span id="cb26-71"><a href="#cb26-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-72"><a href="#cb26-72" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_m1, <span class="fu">aes</span>(<span class="at">x =</span> Months, <span class="at">y =</span> Number_of_Visitors_2021, <span class="at">fill=</span>Months)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span> )</span>
+<span id="cb26-73"><a href="#cb26-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-74"><a href="#cb26-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-75"><a href="#cb26-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-76"><a href="#cb26-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-77"><a href="#cb26-77" aria-hidden="true" tabindex="-1"></a>When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period.</span>
+<span id="cb26-78"><a href="#cb26-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-79"><a href="#cb26-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-82"><a href="#cb26-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-83"><a href="#cb26-83" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(income_n1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-84"><a href="#cb26-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_expenditure_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism expenditure in ThousandDollars"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-85"><a href="#cb26-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Tourism_Income_in_ThousandDollars, <span class="at">colour =</span> <span class="st">"Tourism Income in ThousandDollars"</span>))</span>
+<span id="cb26-86"><a href="#cb26-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-87"><a href="#cb26-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-88"><a href="#cb26-88" aria-hidden="true" tabindex="-1"></a>As we see from above graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit. </span>
+<span id="cb26-89"><a href="#cb26-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-90"><a href="#cb26-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-93"><a href="#cb26-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-94"><a href="#cb26-94" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> income_n1 <span class="sc">%&gt;%</span></span>
+<span id="cb26-95"><a href="#cb26-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Tourism_expenditure_in_ThousandDollars, Tourism_Income_in_ThousandDollars, <span class="at">size =</span> Year, <span class="at">color =</span> Year)) <span class="sc">+</span> </span>
+<span id="cb26-96"><a href="#cb26-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb26-97"><a href="#cb26-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb26-98"><a href="#cb26-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-99"><a href="#cb26-99" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplotly</span>(p)</span>
+<span id="cb26-100"><a href="#cb26-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-101"><a href="#cb26-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-102"><a href="#cb26-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-103"><a href="#cb26-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-104"><a href="#cb26-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Nationatilty Changes</span></span>
+<span id="cb26-105"><a href="#cb26-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-106"><a href="#cb26-106" aria-hidden="true" tabindex="-1"></a>In this section we will analyze the changes in nationality visit to Turkey as a tourist. With this analysis, we will try to analyze whether there is a difference before and after the pandemic? For this analysis we are going to use depart_by_residence dataset.</span>
+<span id="cb26-107"><a href="#cb26-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-108"><a href="#cb26-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-109"><a href="#cb26-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-112"><a href="#cb26-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-113"><a href="#cb26-113" aria-hidden="true" tabindex="-1"></a>residence <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/depart_by_residence.xlsx"</span>)</span>
+<span id="cb26-114"><a href="#cb26-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-115"><a href="#cb26-115" aria-hidden="true" tabindex="-1"></a><span class="co">#colnames(residence) &lt;- c('Nationality', 'Year_2012', 'Year_2013', 'Year_2014', 'Year_2015', 'Year_2015', 'Year_2016', 'Year_2017', 'Year_2018', 'Year_2019',  'Year_2020', 'Year_2021')</span></span>
+<span id="cb26-116"><a href="#cb26-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-117"><a href="#cb26-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-118"><a href="#cb26-118" aria-hidden="true" tabindex="-1"></a><span class="co">#ggplot(residence, aes(x=" ", y=Year_2020, fill = Nationality)) + geom_bar(stat = "identity")</span></span>
+<span id="cb26-119"><a href="#cb26-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-120"><a href="#cb26-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-121"><a href="#cb26-121" aria-hidden="true" tabindex="-1"></a>residence_new <span class="ot">&lt;-</span> <span class="fu">melt</span>(residence, <span class="at">id =</span> <span class="st">"Nationality"</span>)</span>
+<span id="cb26-122"><a href="#cb26-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-123"><a href="#cb26-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-124"><a href="#cb26-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-125"><a href="#cb26-125" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reasons to come</span></span>
+<span id="cb26-126"><a href="#cb26-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-127"><a href="#cb26-127" aria-hidden="true" tabindex="-1"></a>In this section we will analyze the reasons to come Turkey as a turist how change in years. With respect to pandemic effect we can say that</span>
+<span id="cb26-128"><a href="#cb26-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-131"><a href="#cb26-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-132"><a href="#cb26-132" aria-hidden="true" tabindex="-1"></a>reasons_to_come <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"term_project/purposes.xlsx"</span>)</span>
+<span id="cb26-133"><a href="#cb26-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-134"><a href="#cb26-134" aria-hidden="true" tabindex="-1"></a>reasons_quarter <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"I"</span>, <span class="st">"II"</span>, <span class="st">"III"</span>, <span class="st">"IV"</span>))</span>
+<span id="cb26-135"><a href="#cb26-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-136"><a href="#cb26-136" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_quarter, <span class="fu">aes</span>(<span class="at">x=</span> Year, <span class="at">y=</span> ALL_Total, <span class="at">fill =</span> Quarter))<span class="sc">+</span><span class="fu">geom_boxplot</span>()</span>
+<span id="cb26-137"><a href="#cb26-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-138"><a href="#cb26-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-139"><a href="#cb26-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-140"><a href="#cb26-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-141"><a href="#cb26-141" aria-hidden="true" tabindex="-1"></a>Health or Medical Reasons vs Total Touristic Activities; </span>
+<span id="cb26-142"><a href="#cb26-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-145"><a href="#cb26-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-146"><a href="#cb26-146" aria-hidden="true" tabindex="-1"></a>reasons_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="st">"Annual"</span>)</span>
+<span id="cb26-147"><a href="#cb26-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-148"><a href="#cb26-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-149"><a href="#cb26-149" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-150"><a href="#cb26-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-151"><a href="#cb26-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Health_or_medical_reasons, <span class="at">colour =</span> <span class="st">"Health or Medical Reasons"</span>))</span>
+<span id="cb26-152"><a href="#cb26-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-153"><a href="#cb26-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-154"><a href="#cb26-154" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-155"><a href="#cb26-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-156"><a href="#cb26-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-157"><a href="#cb26-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-158"><a href="#cb26-158" aria-hidden="true" tabindex="-1"></a>As we can see there is no difference in health or medical purpose in total touristic activities over the years. </span>
+<span id="cb26-159"><a href="#cb26-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-160"><a href="#cb26-160" aria-hidden="true" tabindex="-1"></a>In the above we will examine same analysis for all purposes. And later we will come to outcome for this section.</span>
+<span id="cb26-161"><a href="#cb26-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-162"><a href="#cb26-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-163"><a href="#cb26-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-164"><a href="#cb26-164" aria-hidden="true" tabindex="-1"></a>Cultural Activities vs. Total Turistic Activities; </span>
+<span id="cb26-167"><a href="#cb26-167" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-168"><a href="#cb26-168" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-169"><a href="#cb26-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-170"><a href="#cb26-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Travel_entertainment_sportive_or_cultural_activities, <span class="at">colour =</span> <span class="st">"Cultural Activites"</span>))</span>
+<span id="cb26-171"><a href="#cb26-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-172"><a href="#cb26-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-173"><a href="#cb26-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-174"><a href="#cb26-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-175"><a href="#cb26-175" aria-hidden="true" tabindex="-1"></a>Family and Friends Visiting vs. Total Turistic Activities</span>
+<span id="cb26-178"><a href="#cb26-178" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-179"><a href="#cb26-179" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-180"><a href="#cb26-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-181"><a href="#cb26-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Visiting_relatives_and_friends, <span class="at">colour =</span> <span class="st">"Family and Friends Visiting"</span>))</span>
+<span id="cb26-182"><a href="#cb26-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-183"><a href="#cb26-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-184"><a href="#cb26-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-185"><a href="#cb26-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-186"><a href="#cb26-186" aria-hidden="true" tabindex="-1"></a>Education Purpose vs. Total Turistic Activities</span>
+<span id="cb26-189"><a href="#cb26-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-190"><a href="#cb26-190" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-191"><a href="#cb26-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-192"><a href="#cb26-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Education_training, <span class="at">colour =</span> <span class="st">"Education Purpose"</span>))</span>
+<span id="cb26-193"><a href="#cb26-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-194"><a href="#cb26-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-195"><a href="#cb26-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-196"><a href="#cb26-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-197"><a href="#cb26-197" aria-hidden="true" tabindex="-1"></a>Religion Purposes vs. Total Turistic Activities;</span>
+<span id="cb26-198"><a href="#cb26-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-201"><a href="#cb26-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-202"><a href="#cb26-202" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-203"><a href="#cb26-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-204"><a href="#cb26-204" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Religion_Pilgrimag, <span class="at">colour =</span> <span class="st">"Religion Purposes"</span>))</span>
+<span id="cb26-205"><a href="#cb26-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-206"><a href="#cb26-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-207"><a href="#cb26-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-208"><a href="#cb26-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-209"><a href="#cb26-209" aria-hidden="true" tabindex="-1"></a>Shopping Purposes vs. Total Turistic Activities</span>
+<span id="cb26-212"><a href="#cb26-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-213"><a href="#cb26-213" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-214"><a href="#cb26-214" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-215"><a href="#cb26-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Shoppin, <span class="at">colour =</span> <span class="st">"Shopping Purposes"</span>))</span>
+<span id="cb26-216"><a href="#cb26-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-217"><a href="#cb26-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-218"><a href="#cb26-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-219"><a href="#cb26-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-220"><a href="#cb26-220" aria-hidden="true" tabindex="-1"></a>Business Purposes vs. Total Turistic Activities</span>
+<span id="cb26-223"><a href="#cb26-223" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-224"><a href="#cb26-224" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-225"><a href="#cb26-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-226"><a href="#cb26-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Business, <span class="at">colour =</span> <span class="st">"Business Purposes"</span>))</span>
+<span id="cb26-227"><a href="#cb26-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-228"><a href="#cb26-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-229"><a href="#cb26-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-230"><a href="#cb26-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-231"><a href="#cb26-231" aria-hidden="true" tabindex="-1"></a>Other Reasons vs. Total Turistic Activities</span>
+<span id="cb26-234"><a href="#cb26-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-235"><a href="#cb26-235" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-236"><a href="#cb26-236" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-237"><a href="#cb26-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Other, <span class="at">colour =</span> <span class="st">"Other Reasons"</span>))</span>
+<span id="cb26-238"><a href="#cb26-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-239"><a href="#cb26-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-240"><a href="#cb26-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-241"><a href="#cb26-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-242"><a href="#cb26-242" aria-hidden="true" tabindex="-1"></a>After examine all the reasons vs total turistic activities we can see that after 2020 - which is the start of pandemic - total visitors came to Turkey is much more little than other years. </span>
+<span id="cb26-243"><a href="#cb26-243" aria-hidden="true" tabindex="-1"></a>Also we can clearly see the cultural activities visiting which include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities. </span>
+<span id="cb26-244"><a href="#cb26-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-247"><a href="#cb26-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-248"><a href="#cb26-248" aria-hidden="true" tabindex="-1"></a>reasons_1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(reasons_to_come, Quarter <span class="sc">%in%</span> <span class="st">"Annual"</span>)</span>
+<span id="cb26-249"><a href="#cb26-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-250"><a href="#cb26-250" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_to_come, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y=</span> ALL_Total, <span class="at">fill =</span> Quarter)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>)</span>
+<span id="cb26-251"><a href="#cb26-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-252"><a href="#cb26-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-253"><a href="#cb26-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-254"><a href="#cb26-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-255"><a href="#cb26-255" aria-hidden="true" tabindex="-1"></a>These values inclued all touristics acitivities, so if a turkish citizen came to Turkey as touristic purposes this dataset includes all of them. If we want to see all TR activities in all touristic activities we can look graph below; </span>
+<span id="cb26-256"><a href="#cb26-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-257"><a href="#cb26-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-260"><a href="#cb26-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-261"><a href="#cb26-261" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(reasons_1, <span class="fu">aes</span>(Year)) <span class="sc">+</span> </span>
+<span id="cb26-262"><a href="#cb26-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ALL_Total, <span class="at">colour =</span> <span class="st">"Total Touristic Activities"</span>)) <span class="sc">+</span> </span>
+<span id="cb26-263"><a href="#cb26-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> TR_Total, <span class="at">colour =</span> <span class="st">"TR Total Activities"</span>))</span>
+<span id="cb26-264"><a href="#cb26-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-265"><a href="#cb26-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-266"><a href="#cb26-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-267"><a href="#cb26-267" aria-hidden="true" tabindex="-1"></a>As we can see this graphic the TR visitors who came to Turket as a touristic acitivities is almost same over the year but in 2020 - with pandemic restrictions - the visitors number is decreased very fast. </span>
+<span id="cb26-268"><a href="#cb26-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-269"><a href="#cb26-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-270"><a href="#cb26-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-271"><a href="#cb26-271" aria-hidden="true" tabindex="-1"></a>If we want to look all activities in pie chart for see the distrubition of all in 2019, 2020, 2021 for quarter and annual base; </span>
+<span id="cb26-272"><a href="#cb26-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-275"><a href="#cb26-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb26-276"><a href="#cb26-276" aria-hidden="true" tabindex="-1"></a><span class="do">##pie chart - - - - </span></span>
+<span id="cb26-277"><a href="#cb26-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-278"><a href="#cb26-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-279"><a href="#cb26-279" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb26-280"><a href="#cb26-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-281"><a href="#cb26-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-282"><a href="#cb26-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-283"><a href="#cb26-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-284"><a href="#cb26-284" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
