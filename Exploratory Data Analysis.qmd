@@ -20,7 +20,7 @@ pre {
 ```
 ## Necessary libraries
 
-```{r}
+```{r, echo=TRUE, message=FALSE}
 
 library(tidyverse)
 library(dplyr)
