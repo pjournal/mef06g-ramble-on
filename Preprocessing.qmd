@@ -40,6 +40,7 @@ library(readxl)
 library(knitr)
 library(dplyr)
 library(tidyr)
+library(reshape2)
 # install.packages("writexl")
 library(writexl)
 ```
@@ -82,6 +83,11 @@ Lastly, data type for the year columns should be integers. Lack of warnings will
 dep <- dep %>%
     mutate(across("2012":"2021", as.integer))
 write_xlsx(dep,"term_project/depart_by_residence.xlsx")
+
+melted_dep <- melt(dep, "Nationality")
+colnames(melted_dep) <- c('Nationality','Dep_Year','Departing_Visitors')
+
+write_xlsx(melted_dep,"term_project/melted_depart_by_residence.xlsx")
 glimpse(dep)
 ```
 
