@@ -29,7 +29,10 @@ library(ggplot2)
 library(reshape2)
 library(plotly)
 library(gapminder)
-
+library(scales)
+library(hrbrthemes)
+library(viridis)
+library(wordcloud2)
 
 ```
 
@@ -39,9 +42,10 @@ We are going to analyze the changes of touristic activities according to pandemi
 
 ## Spending Behavior Analysis
 
-First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long did tourists stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter.
+First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long and how many tourists did stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter. Also in both dataset the values in April, May and June of 2020 is missing based on number of departing visitors and total income. Because of strict pandemic rules in globally there was no record.
 
-First let check how many visitors came to Turkey over the years. 
+First let check how many visitors came to Turkey over the years.
+
 ```{r}
 
 library(readxl)
@@ -49,90 +53,170 @@ income_nights <- read_excel("term_project/income_nights.xlsx")
 income_months <- read_excel("term_project/income_months.xlsx")
 
 
-#income_n1$Tourism_Income_in_ThousandDollars = ifelse(is.na(income_n1$Tourism_Income_in_ThousandDollars), ave(income_n1$Tourism_Income_in_ThousandDollars, FUN = function(x) mean(x, na.rm = TRUE)), income_n1$Tourism_Income_in_ThousandDollars)# deneme amaçlı 2022 annual değeri doldurma fonksiyonu ? 
-
 income_n1 <- filter(income_nights, Quarter %in% c("Anual"))
 
-ggplot(income_n1, aes(x = Year, y = Number_of_Departing_Visitors, fill=Year)) + geom_bar(stat = "identity" )
+ggplot(income_n1, aes(x = Year, y= Number_of_Departing_Visitors, fill = Number_of_Departing_Visitors, ))+
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 50, hjust = 2))+
+  ggtitle("Number of Departing Visitors by Year") +
+  xlab("Year") + ylab("Number of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
-When we look at the graph, the sharp decrease in the number of tourists in 2020 and 2021 can be seen. If we want to look closely in 2020 and 2021 month by month the graphic shows that  
+When we look at the graph, the sharp decrease in the number of tourists in 2020 and 2021 can be seen. If we want to look closely in 2020 and 2021 month by month the graphic shows that
 
 ```{r}
 
 income_m1 <- filter(income_months, Months %in% c("January", "February", "March", "April", "May", "June", "July", "August","September","October","November","December"))
 
 
-ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2020, fill=Months)) + geom_bar(stat = "identity")
 
-ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2021, fill=Months)) + geom_bar(stat = "identity" )
+ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2020, fill= Number_of_Visitors_2020)) +
+  ggtitle("Number of Departing Visitors by Month in 2020") +
+  xlab("Months") + 
+  ylab("Number of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
+
+
+ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2021, fill= Number_of_Visitors_2021)) +
+  ggtitle("Number of Departing Visitors by Month in 2021") +
+  xlab("Months") + 
+  ylab("Number of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 
 ```
 
-When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period.
-
+When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period. The expenditure covers the tourism expenditures made in that period by our country . Income, on the other hand, refers to the tourism income that comes to the country by tourists.
 
 ```{r}
 
 ggplot(income_n1, aes(Year)) + 
-  geom_line(aes(y = Tourism_expenditure_in_ThousandDollars, colour = "Tourism expenditure in ThousandDollars")) + 
-  geom_line(aes(y = Tourism_Income_in_ThousandDollars, colour = "Tourism Income in ThousandDollars"))
+  geom_line(aes(y = Tourism_expenditure_in_ThousandDollars, colour = "Tourism expenditure in Thousand Dollars")) + 
+  geom_line(aes(y = Tourism_Income_in_ThousandDollars, colour = "Tourism Income in Thousand Dollars")) +
+  ggtitle("Tourism Expenditure vs. Tourism Income") +
+  xlab("Year") + 
+  ylab("Dolar") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
-As we see from above graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit. 
 
+As we see from above graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit.
 
 ```{r}
  
 p <- income_n1 %>%
-  ggplot(aes(Tourism_expenditure_in_ThousandDollars, Tourism_Income_in_ThousandDollars, size = Year, color = Year)) + 
+  ggplot(aes(Tourism_expenditure_in_ThousandDollars, Tourism_Income_in_ThousandDollars, size = Number_of_Departing_Visitors, color = Year)) + 
   geom_point() + 
-  theme_bw()
+  theme_bw()+
+  ggtitle("Tourism Expenditure vs. Tourism Income") +
+  xlab("Tourism Expenditure in Thousand Dollars") + 
+  ylab("Tourism Income in Thousand Dollars") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  scale_x_continuous(labels = label_number(suffix = "M", scale = 1e-6))
+
 
 ggplotly(p)
 
 ```
 
-
 ## Nationatilty Changes
 
 In this section we will analyze the changes in nationality visit to Turkey as a tourist. With this analysis, we will try to analyze whether there is a difference before and after the pandemic? For this analysis we are going to use depart_by_residence dataset.
 
-
+This dataset only include the nationality, year and number of visitors came to Turkey.
 
 ```{r}
 
 
-residence <- read_excel("term_project/depart_by_residence.xlsx")
+residence <- read_excel("term_project/melted_depart_by_residence.xlsx")
 
-#colnames(residence) <- c('Nationality', 'Year_2012', 'Year_2013', 'Year_2014', 'Year_2015', 'Year_2015', 'Year_2016', 'Year_2017', 'Year_2018', 'Year_2019',  'Year_2020', 'Year_2021')
-
-
-#ggplot(residence, aes(x=" ", y=Year_2020, fill = Nationality)) + geom_bar(stat = "identity")
-
-
-residence_new <- melt(residence, id = "Nationality")
+ggplot( residence, aes(x = Dep_Year, y = Departing_Visitors, group= Nationality, fill = Nationality)) + 
+  geom_area()+ 
+  scale_fill_viridis(discrete = TRUE) + 
+  theme(legend.position = "none") +
+  ggtitle("Visitor's Nationality over the years") + 
+  xlab("Year") + 
+  ylab("Numver of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  theme_ipsum() + 
+  theme(
+    legend.position = "none",
+    panel.spacing = unit(0, "lines"),
+    strip.text.x = element_text(size = 5),
+    plot.title = element_text(size = 12)
+  ) + 
+  facet_wrap(~Nationality, scales = "free_y")
+ 
 
 ```
 
+As we want to examine the effect of pandemic restrictions and effect of post-pandemic behaviours , we only get the 2019, 2020, 2021 and 2022 years for closer look. Because when we try to look all years it can not be reasonable to make adjustments.
+
+```{r}
+ 
+residence_2 <- filter(residence, Dep_Year %in% c("2019", "2020" , "2021", "2022" ) )
+
+ggplot( residence_2, aes(x = Dep_Year, y = Departing_Visitors, group= Nationality, fill = Nationality)) + 
+  geom_area()+ 
+  scale_fill_viridis(discrete = TRUE) + 
+  theme(legend.position = "none") +
+  ggtitle("Visitor's Nationality over the years") + 
+  xlab("Year") + 
+  ylab("Numver of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  theme_ipsum() + 
+  theme(
+    legend.position = "none",
+    panel.spacing = unit(0, "lines"),
+    strip.text.x = element_text(size = 5),
+    plot.title = element_text(size = 12)
+  ) + 
+  facet_wrap(~Nationality, scales = "free_y")
+
+```
+
+When we look at this data we can clearly see some observations. For example;
+
+1- Many countries still have not reached the number of tourists that existed before the pandemic, after the pandemic.
+
+2- In addition, Ukraine and Switzerland exceeded the number of tourists before the pandemic. (When we consider that the year 2022 is not completed in this dataset, we can fully think that it is not a reflection of the Russia-Ukraine war.)
+
+3- In Italy, Georgia, Greece, Japan we can see that there is a tourist arrival far below the pre-pandemic countries. these countries are far below their pre-pandemic arrivals.
+
 ## Reasons to come
 
-In this section we will analyze the reasons to come Turkey as a turist how change in years. With respect to pandemic effect we can say that
+In this section we will analyze the reasons to come Turkey as a tourist how change in years. We will see if there is a specific variability between years on a quarterly basis. In the chart below, the number of visitors in the four quarters is compared year by year.
+
+In 2022 we do not have quarter IV value. But in general as we can see tourism activities
 
 ```{r}
 
 reasons_to_come <- read_excel("term_project/purposes.xlsx")
 
-reasons_quarter <- filter(reasons_to_come, Quarter %in% c("I", "II", "III", "IV"))
+reasons_2 <- filter(reasons_to_come, Quarter %in% c("I", "II", "III", "IV"))
 
-ggplot(reasons_quarter, aes(x= Year, y= ALL_Total, fill = Quarter))+geom_boxplot()
+ggplot(reasons_2, aes(x = Year, y= ALL_Total, fill = Quarter)) + geom_bar(stat = "identity", position = "dodge") + 
+  ggtitle("Total Visitors by Quarter/Year") +
+  xlab("Year") + 
+  ylab("Total Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) 
+
 
 ```
 
+If we want to look all activities in pie chart for see the distrubition of all in 2019, 2020, 2021 for quarter and annual base;
 
-Health or Medical Reasons vs Total Touristic Activities; 
+```{r}
+
+
+
+
+
+
+```
+
+Health or Medical Reasons vs Total Touristic Activities;
 
 ```{r}
 
@@ -147,15 +231,12 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
-
-
-As we can see there is no difference in health or medical purpose in total touristic activities over the years. 
+As we can see there is no difference in health or medical purpose in total touristic activities over the years.
 
 In the above we will examine same analysis for all purposes. And later we will come to outcome for this section.
 
+Cultural Activities vs. Total touristic Activities;
 
-
-Cultural Activities vs. Total Turistic Activities; 
 ```{r}
 
 ggplot(reasons_1, aes(Year)) + 
@@ -164,8 +245,8 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
+Family and Friends Visiting vs. Total touristic Activities
 
-Family and Friends Visiting vs. Total Turistic Activities
 ```{r}
 
 ggplot(reasons_1, aes(Year)) + 
@@ -174,8 +255,8 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
+Education Purpose vs. Total touristic Activities
 
-Education Purpose vs. Total Turistic Activities
 ```{r}
 
 ggplot(reasons_1, aes(Year)) + 
@@ -184,8 +265,7 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
-
-Religion Purposes vs. Total Turistic Activities;
+Religion Purposes vs. Total touristic Activities;
 
 ```{r}
 
@@ -195,8 +275,8 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
+Shopping Purposes vs. Total touristic Activities
 
-Shopping Purposes vs. Total Turistic Activities
 ```{r}
 
 ggplot(reasons_1, aes(Year)) + 
@@ -205,8 +285,8 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
+Business Purposes vs. Total touristic Activities
 
-Business Purposes vs. Total Turistic Activities
 ```{r}
 
 ggplot(reasons_1, aes(Year)) + 
@@ -215,8 +295,8 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
+Other Reasons vs. Total touristic Activities
 
-Other Reasons vs. Total Turistic Activities
 ```{r}
 
 ggplot(reasons_1, aes(Year)) + 
@@ -225,20 +305,9 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
+After examine all the reasons vs total touristic activities we can see that after 2020 - which is the start of pandemic - total visitors came to Turkey is much more little than other years. Also we can clearly see the cultural activities visiting which include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities.
 
-After examine all the reasons vs total turistic activities we can see that after 2020 - which is the start of pandemic - total visitors came to Turkey is much more little than other years. 
-Also we can clearly see the cultural activities visiting which include sportive, entertainment and cultural activities constitutes a very large part of the total visit. Second in row is family and friend visiting for all touristic activities. 
-
-```{r}
-reasons_1 <- filter(reasons_to_come, Quarter %in% "Annual")
-
-ggplot(reasons_to_come, aes(x = Year, y= ALL_Total, fill = Quarter)) + geom_bar(stat = "identity", position = "dodge")
-
-```
-
-
-These values inclued all touristics acitivities, so if a turkish citizen came to Turkey as touristic purposes this dataset includes all of them. If we want to see all TR activities in all touristic activities we can look graph below; 
-
+These values inclued all touristic acitivities, so if a turkish citizen came to Turkey as touristic purposes this dataset includes all of them. If we want to see all TR activities in all touristic activities we can look graph below;
 
 ```{r}
 
@@ -248,21 +317,6 @@ ggplot(reasons_1, aes(Year)) +
 
 ```
 
-As we can see this graphic the TR visitors who came to Turket as a touristic acitivities is almost same over the year but in 2020 - with pandemic restrictions - the visitors number is decreased very fast. 
+As we can see this graphic the TR visitors who came to Turket as a touristic acitivities is almost same over the year but in 2020 - with pandemic restrictions - the visitors number is decreased very fast and it is not still came to same range before pandemic.
 
-
-
-If we want to look all activities in pie chart for see the distrubition of all in 2019, 2020, 2021 for quarter and annual base; 
-
-```{r}
-
-##pie chart - - - - 
-
-
-```
-
-
-
-
-
-
+But it is nice to remind that in 2022 we do not have a total annual values because the year is not finished yet. The data set only includes values up to the third quarter. Therefore, since the data set we analyze annually does not contain an annual value, the graphs end at zero point.
