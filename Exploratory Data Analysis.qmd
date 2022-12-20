@@ -37,19 +37,20 @@ library(wordcloud2)
 
 ## 
 
-We are going to analyze the changes of touristic activities according to pandemic. As we mention in our project proposal we are going to make this analysis with scope of spending behaviors, nationality changes and why tourists came to Turkey.
+We are going to analyze the changes of touristic activities according to the pandemic. As we mention in our project proposal we are going to make this analysis with scope of spending behaviors, nationality changes and why tourists came to Turkey.
 
 ## Spending Behavior Analysis
 
-First we are going to analysis the change in spending behavior. For this analysis we are going to use datasets income_nights and income_months. Income_nights show the spending analysis according to total and average expenditure and how long and how many tourists did stay in Turkey. Income_months datasest shows that total expenditure, income of tourists and number of visitors month by month. Both dataset starts with 2012 and finish at 2022 third quarter. Also in both dataset the values in April, May and June of 2020 is missing based on number of departing visitors and total income. Because of strict pandemic rules in globally there was no record.
+First we are going to analyze the change in spending behavior. For this analysis we are going to use data sets income_nights and income_months. income_nights shows the spending data according to total and average expenditure and for how long and how many tourists stayed in Turkey. Income_months data set shows that total expenditure, income of tourists and number of visitors per month. Both data set start with 2012 and finish at third quarter of 2022. Also in both data set the values in April, May and June of 2020 is missing based on number of departing visitors and total income. There was no record because of the strict pandemic rules.
 
-First let check how many visitors came to Turkey over the years.
+First lets check how many visitors came to Turkey over the years.
 
 ```{r}
 
-library(readxl)
-income_nights <- read_excel("term_project/income_nights.xlsx")
-income_months <- read_excel("term_project/income_months.xlsx")
+income_nights <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/income_nights.rds?raw=true"))
+
+
+income_months <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/income_months.rds?raw=true"))
 
 income_n1 <- filter(income_nights, Quarter %in% c("Anual"))
 
@@ -63,15 +64,15 @@ ggplot(income_n1, aes(x = factor(Year), y= Number_of_Departing_Visitors, fill = 
 
 ```
 
-When we look at the graph, the sharp decrease in the number of tourists in 2020 and 2021 can be seen. If we want to look closely in 2020 and 2021 month by month the graphic shows that
+When we look at the graph, the sharp decrease in the number of tourists in 2020 and 2021 can be seen. Data are missing for April, May, June in 2020 since TUIK has not collected data in this duration due to the pandemic. If we want to look closely in 2020 and 2021 month by month the graphic shows that
 
 ```{r}
 
 income_m1 <- filter(income_months, Months %in% c("January", "February", "March", "April", "May", "June", "July", "August","September","October","November","December"))
 
+income_m1$month_in_int <- as.integer(factor(income_m1$Months, levels = month.name))
 
-
-ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2020, fill= Number_of_Visitors_2020)) +
+ggplot(income_m1, aes(x = reorder(Months, +month_in_int), y = Number_of_Visitors_2020, fill= Number_of_Visitors_2020)) +
   geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ggtitle("Number of Departing Visitors by Month in 2020") +
   xlab("Months") + 
@@ -81,7 +82,7 @@ ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2020, fill= Number_of_V
   guides(fill=guide_legend(title="Number of Visitors in 2020"))
 
 
-ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2021, fill= Number_of_Visitors_2021)) +
+ggplot(income_m1, aes(x = reorder(Months, +month_in_int), y = Number_of_Visitors_2021, fill= Number_of_Visitors_2021)) +
   geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ggtitle("Number of Departing Visitors by Month in 2021") +
   xlab("Months") + 
@@ -93,17 +94,18 @@ ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2021, fill= Number_of_V
 
 ```
 
-When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be seen very critically. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period. The expenditure covers the tourism expenditures made in that period by our country . Income, on the other hand, refers to the tourism income that comes to the country by tourists.
+When we look at the month-based expenditure graph of the year the pandemic first appeared - 2020 - and the number of people arriving, the decrease in the period of bans can be distinguished easily. In the data set we have, the number of visitors in the months covering the second quarter of 2020 was entered as 0, which also reveals the travel bans of that period. The expenditure covers the tourism spending made in that period by Turkish citizens in abroad. Income, on the other hand, refers to the spending of the tourists in our country.
 
 ```{r}
+income_wo22 <- filter(income_n1, Year != 2022)
 
-ggplot(income_n1, aes(Year)) + 
+ggplot(income_wo22, aes(Year)) + 
   geom_line(aes(y = Tourism_expenditure_in_ThousandDollars, colour = "Tourism expenditure in Thousand Dollars")) + 
   geom_line(aes(y = Tourism_Income_in_ThousandDollars, colour = "Tourism Income in Thousand Dollars")) +
   ggtitle("Tourism Expenditure vs. Tourism Income") +
   xlab("Year") + 
   ylab("Dolar") + 
-  scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) + 
+  scale_x_continuous(breaks=c(2012, seq(2012, 2022))) + 
   scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -135,8 +137,7 @@ This dataset only include the nationality, year and number of visitors came to T
 
 ```{r}
 
-
-residence <- read_excel("term_project/melted_depart_by_residence.xlsx")
+residence <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/melted_depart_by_residence.rds?raw=true"))
 
 ggplot( residence, aes(x = Dep_Year, y = Departing_Visitors, group= Nationality, fill = Nationality)) + 
   geom_area()+ 
@@ -158,7 +159,7 @@ ggplot( residence, aes(x = Dep_Year, y = Departing_Visitors, group= Nationality,
 
 ```
 
-As we want to examine the effect of pandemic restrictions and effect of post-pandemic behaviours , we only get the 2019, 2020, 2021 and 2022 years for closer look. Because when we try to look all years it can not be reasonable to make adjustments.
+As we want to examine the effect of the pandemic restrictions and effect of post-pandemic behaviors, we only get the 2019, 2020, 2021 and 2022 years for closer look. Because if we were to look all years, it would not be reasonable to make adjustments.
 
 ```{r}
  
@@ -187,19 +188,19 @@ When we look at this data we can clearly see some observations. For example;
 
 1- Many countries still have not reached the number of tourists that existed before the pandemic, after the pandemic.
 
-2- In addition, Ukraine and Switzerland exceeded the number of tourists before the pandemic. (When we consider that the year 2022 is not completed in this dataset, we can fully think that it is not a reflection of the Russia-Ukraine war.)
+2- In addition, Ukraine and Switzerland exceeded the number of tourists before the pandemic. (When we consider that the year 2022 is not completed in this data set, we can fully think that it is not a reflection of the Russia-Ukraine war.)
 
-3- In Italy, Georgia, Greece, Japan we can see that there is a tourist arrival far below the pre-pandemic countries. these countries are far below their pre-pandemic arrivals.
+3- In Italy, Georgia, Greece, Japan we can see that there is a tourist arrival far below the pre-pandemic countries. These countries are far below their pre-pandemic arrivals.
 
 ## Reasons to come
 
-In this section we will analyze the reasons to come Turkey as a tourist how change in years. We will see if there is a specific variability between years on a quarterly basis. In the chart below, the number of visitors in the four quarters is compared year by year.
+In this section we will analyze the change in the reasons for coming to Turkey as a tourist through years. We will see if there is a specific variability between years on a quarterly basis. In the chart below, the number of visitors in the four quarters is compared year by year.
 
 In 2022 we do not have quarter IV value. But in general as we can see tourism activities
 
 ```{r}
 
-reasons_to_come <- read_excel("term_project/purposes.xlsx")
+reasons_to_come <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/purposes.rds?raw=true"))
 
 reasons_2 <- filter(reasons_to_come, Quarter %in% c("I", "II", "III", "IV"))
 
@@ -229,13 +230,14 @@ Health or Medical Reasons vs Total Touristic Activities;
 
 
 reasons_1 <- filter(reasons_to_come, Quarter %in% "Annual")
+reasons_1 <- filter(reasons_1, Year != 2022)
 
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Health_or_medical_reasons, colour = "Health or Medical Reasons")) +
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -252,7 +254,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Travel_entertainment_sportive_or_cultural_activities, colour = "Cultural Activites")) +
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -265,7 +267,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Visiting_relatives_and_friends, colour = "Family and Friends Visiting")) + 
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -278,7 +280,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Education_training, colour = "Education Purpose")) + 
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -291,7 +293,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Religion_Pilgrimag, colour = "Religion Purposes")) +
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -302,7 +304,10 @@ Shopping Purposes vs. Total touristic Activities
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Shoppin, colour = "Shopping Purposes"))
+  geom_line(aes(y = ALL_Shoppin, colour = "Shopping Purposes")) + 
+    ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -314,7 +319,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Business, colour = "Business Purposes")) +
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -327,7 +332,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = ALL_Other, colour = "Other Reasons")) + 
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -342,7 +347,7 @@ ggplot(reasons_1, aes(Year)) +
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
   geom_line(aes(y = TR_Total, colour = "TR Total Activities")) + 
   ylab("Total") +
-    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022))) +
     scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
