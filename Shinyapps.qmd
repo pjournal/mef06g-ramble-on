@@ -1,0 +1,12 @@
+---
+title: "Shiny Apps"
+editor: visual
+---
+
+You can see the links of the Shiny Apps we have created below. We developed 3 separate applications. You will see the explanations when you go to the links.
+
+### Links for Apps {.unnumbered}
+
+-   [Locations of the Visitors by Year](https://rambleon.shinyapps.io/country_distribution/?_ga=2.111802050.713378200.1671565830-1337276468.1671124305)\
+-   [Comparison of the Reasons for the Trips](https://rambleon.shinyapps.io/comparisonreasons/?_ga=2.119182159.713378200.1671565830-1337276468.1671124305)
+-   [Categorical Data for Tourism by Year](https://rambleon.shinyapps.io/annualvisitorinfo/?_ga=2.119182159.713378200.1671565830-1337276468.1671124305)
