@@ -21,7 +21,6 @@ pre {
 ## Necessary libraries
 
 ```{r, echo=TRUE, message=FALSE}
-
 library(tidyverse)
 library(dplyr)
 library(tidyr)
@@ -52,14 +51,15 @@ library(readxl)
 income_nights <- read_excel("term_project/income_nights.xlsx")
 income_months <- read_excel("term_project/income_months.xlsx")
 
-
 income_n1 <- filter(income_nights, Quarter %in% c("Anual"))
 
-ggplot(income_n1, aes(x = Year, y= Number_of_Departing_Visitors, fill = Number_of_Departing_Visitors, ))+
-  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 50, hjust = 2))+
+ggplot(income_n1, aes(x = factor(Year), y= Number_of_Departing_Visitors, fill = Number_of_Departing_Visitors, ))+
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   ggtitle("Number of Departing Visitors by Year") +
   xlab("Year") + ylab("Number of Departing Visitors") + 
-  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) + 
+  scale_fill_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  guides(fill=guide_legend(title="Number of Departing Visitors"))
 
 ```
 
@@ -72,17 +72,23 @@ income_m1 <- filter(income_months, Months %in% c("January", "February", "March",
 
 
 ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2020, fill= Number_of_Visitors_2020)) +
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ggtitle("Number of Departing Visitors by Month in 2020") +
   xlab("Months") + 
   ylab("Number of Departing Visitors") + 
-  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) + 
+  scale_fill_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  guides(fill=guide_legend(title="Number of Visitors in 2020"))
 
 
 ggplot(income_m1, aes(x = Months, y = Number_of_Visitors_2021, fill= Number_of_Visitors_2021)) +
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ggtitle("Number of Departing Visitors by Month in 2021") +
   xlab("Months") + 
   ylab("Number of Departing Visitors") + 
-  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  scale_fill_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  guides(fill=guide_legend(title="Number of Visitors in 2021"))
 
 
 ```
@@ -97,6 +103,7 @@ ggplot(income_n1, aes(Year)) +
   ggtitle("Tourism Expenditure vs. Tourism Income") +
   xlab("Year") + 
   ylab("Dolar") + 
+  scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) + 
   scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
@@ -200,8 +207,8 @@ ggplot(reasons_2, aes(x = Year, y= ALL_Total, fill = Quarter)) + geom_bar(stat =
   ggtitle("Total Visitors by Quarter/Year") +
   xlab("Year") + 
   ylab("Total Visitors") + 
-  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) 
-
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) 
 
 ```
 
@@ -226,8 +233,10 @@ reasons_1 <- filter(reasons_to_come, Quarter %in% "Annual")
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Health_or_medical_reasons, colour = "Health or Medical Reasons"))
-
+  geom_line(aes(y = ALL_Health_or_medical_reasons, colour = "Health or Medical Reasons")) +
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -241,7 +250,10 @@ Cultural Activities vs. Total touristic Activities;
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Travel_entertainment_sportive_or_cultural_activities, colour = "Cultural Activites"))
+  geom_line(aes(y = ALL_Travel_entertainment_sportive_or_cultural_activities, colour = "Cultural Activites")) +
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -251,7 +263,10 @@ Family and Friends Visiting vs. Total touristic Activities
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Visiting_relatives_and_friends, colour = "Family and Friends Visiting"))
+  geom_line(aes(y = ALL_Visiting_relatives_and_friends, colour = "Family and Friends Visiting")) + 
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -261,7 +276,10 @@ Education Purpose vs. Total touristic Activities
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Education_training, colour = "Education Purpose"))
+  geom_line(aes(y = ALL_Education_training, colour = "Education Purpose")) + 
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -271,7 +289,10 @@ Religion Purposes vs. Total touristic Activities;
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Religion_Pilgrimag, colour = "Religion Purposes"))
+  geom_line(aes(y = ALL_Religion_Pilgrimag, colour = "Religion Purposes")) +
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -291,7 +312,10 @@ Business Purposes vs. Total touristic Activities
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Business, colour = "Business Purposes"))
+  geom_line(aes(y = ALL_Business, colour = "Business Purposes")) +
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -301,7 +325,10 @@ Other Reasons vs. Total touristic Activities
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = ALL_Other, colour = "Other Reasons"))
+  geom_line(aes(y = ALL_Other, colour = "Other Reasons")) + 
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
@@ -313,7 +340,10 @@ These values inclued all touristic acitivities, so if a turkish citizen came to 
 
 ggplot(reasons_1, aes(Year)) + 
   geom_line(aes(y = ALL_Total, colour = "Total Touristic Activities")) + 
-  geom_line(aes(y = TR_Total, colour = "TR Total Activities"))
+  geom_line(aes(y = TR_Total, colour = "TR Total Activities")) + 
+  ylab("Total") +
+    scale_x_continuous(breaks=c(2012, seq(2012, 2022, 2))) +
+    scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6))
 
 ```
 
