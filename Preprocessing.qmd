@@ -29,6 +29,10 @@ There are 4 data sets that are used in the project. These are called;
 
 * [Tourism Income, Number of Visitors and Average Expenditure per Capita by Months](#income_capita)
 
+These data sets were taken from TUIK. TUIK is an official data source that provides data for Turkey in diverse topics. [Link](https://www.tuik.gov.tr/) to their website. Links for the data sets that are used here are in [link1](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=N7O40AWrI5/Vv0kzGXnXCe37dlMXqV1pDlocCKGOBLFcdT3rMensZQNlucedTJBo), [link2](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=rq7teMQGT4tWHfTq7G6NgQ3gWeh4AdROY03HvwqqU5HNayOvmSoEISEpD8VEei3L),
+[link3](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=RdTh/zIRI8SkR7eszQAb/fF4hc98DdmiKRs8NMQZIxb8b4pIZS5xXPHQfmwGUX9j) and [link4](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=EdZkC25lxK4s1FVTMo2d7BmGAm0LkKal/5Ol5pSy1oInfQsXoLUmO2cv/Dg21ke5).
+
+
 They will be processed before any calculations or visualizations to avoid possible errors/mistakes and to be used more effectively.
 
 The data sets contain multiple headers, column names that are written in 2 languages and other explanations that has no place in a data frame. There could be missing values, symbols and false data types in the data. They will be examined and fixed as well.
@@ -41,7 +45,6 @@ library(knitr)
 library(dplyr)
 library(tidyr)
 library(reshape2)
-# install.packages("writexl")
 library(writexl)
 ```
 
@@ -83,11 +86,14 @@ Lastly, data type for the year columns should be integers. Lack of warnings will
 dep <- dep %>%
     mutate(across("2012":"2021", as.integer))
 write_xlsx(dep,"term_project/depart_by_residence.xlsx")
+saveRDS(dep, file = "term_project/depart_by_residence.rds")
 
 melted_dep <- melt(dep, "Nationality")
 colnames(melted_dep) <- c('Nationality','Dep_Year','Departing_Visitors')
 
 write_xlsx(melted_dep,"term_project/melted_depart_by_residence.xlsx")
+saveRDS(melted_dep, file = "term_project/melted_depart_by_residence.rds")
+
 glimpse(dep)
 ```
 
@@ -165,6 +171,7 @@ Lastly, the columns are ready to be assigned by their correct types and the data
 ```{r, echo=TRUE, message=FALSE}
 purp[,-2] <- sapply(purp[,-2],as.integer)
 write_xlsx(purp,"term_project/purposes.xlsx")
+saveRDS(purp, file = "term_project/purposes.rds")
 glimpse(purp)
 ```
 
@@ -233,6 +240,7 @@ night[, 4] <- sapply(night[,4],as.integer)
 night[, 8] <- sapply(night[,8],as.integer)
 
 write_xlsx(night,"term_project/income_nights.xlsx")
+saveRDS(night, file = "term_project/income_nights.rds")
 
 kable(head(night))
 ```
@@ -293,6 +301,7 @@ mon[,grepl("Number_of_Visitors",names(mon))]<-sapply(mon[,grepl("Number_of_Visit
 
 
 write_xlsx(mon,"term_project/income_months.xlsx")
+saveRDS(mon, file = "term_project/income_months.rds")
 
 kable(head(mon))
 ```
