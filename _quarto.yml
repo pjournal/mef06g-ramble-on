@@ -10,6 +10,8 @@ book:
     - assignment1.qmd
     - Preprocessing.qmd
     - Exploratory Data Analysis.qmd
+    - ShinyApp.qmd
+    
   page-footer: 
     center: "[MEF BDA 503](https://mef-bda503.github.io)" 
   sharing: [twitter, facebook]
