@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Ramble On’s Progress Journal",
     "section": "",
-    "text": "This progress journal covers Ramble On’s work during their term at BDA 503 Fall 2022.\nEach section is an assignment or an individual work.\n\n\n\nArzu Alpan\n\nDoğanbarış Gündoğan\nEce Acaroğlu\nGizem Çınar\nTayyip Sinan Ocaktan"
+    "text": "Introduction\n\nThis progress journal covers Ramble On’s work during their term at BDA 503 Fall 2022.\nEach section is an assignment or an individual work.\n\nGroup Members\n\nArzu Alpan\n\nDoğanbarış Gündoğan\nEce Acaroğlu\nGizem Çınar\nTayyip Sinan Ocaktan"
   },
   {
     "objectID": "assignment1.html",
@@ -116,7 +116,7 @@
     "href": "Shinyapps.html",
     "title": "4  Shiny Apps",
     "section": "",
-    "text": "Links for Apps\n\nLocations of the Visitors by Year\n\nComparison of the Reasons for the Trips\nCategorical Data for Tourism by Year"
+    "text": "You can see the links of the Shiny Apps we have created below. We developed 3 separate applications. You will see the explanations when you go to the links.\n\nLinks for Apps\n\nLocations of the Visitors by Year\n\nComparison of the Reasons for the Trips\nCategorical Data for Tourism by Year"
   },
   {
     "objectID": "Exploratory Data Analysis.html#final-adjustments",
