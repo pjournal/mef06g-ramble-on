@@ -5,8 +5,168 @@ editor: visual
 
 You can see the links of the Shiny Apps we have created below. We developed 3 separate applications. You will see the explanations when you go to the links.
 
+Every code of apps are located under the link, so you can see the source codes
+
 ### Links for Apps {.unnumbered}
 
 -   [Locations of the Visitors by Year](https://rambleon.shinyapps.io/countries/)\
+
+```{r, echo=TRUE , message=FALSE}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(shiny)
+
+rawdata <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/depart_by_residence.rds?raw=true"))
+
+countries <- filter(rawdata, Nationality %in% c("USA", "Germany", "Austria", "Azerbaijan", "Belgium", "United Kingdom", "Bulgaria", "People's Republic of China", "Denmark", "France", "Georgia", "Netherlands", "Iraq", "Iran", "Spain", "Israel", "Sweden", "Switzerland", "Italy", "Japan", "Canada", "Russian Federation", "Syria", "Tunisia", "Ukraine", "Greece"))
+
+ui <- fluidPage(
+  
+  titlePanel("Select Year"),
+  
+  sidebarLayout(
+    
+  sidebarPanel(
+    sliderInput("number","to compare", value= 2015, min= 2012, max= 2021),
+  ),
+  
+  mainPanel(
+    plotOutput(outputId = "result", width = "100%")
+  )
+)
+)
+server <- function(input, output, session){
+
+  output$result <- renderPlot({
+    
+    data <- countries %>%
+      select(Nationality,toString(input$number)) 
+
+    colnames(data)[2] <- "Year"
+
+    finaldata <- data %>%
+      filter(Year > ave(Year))
+    
+    finaldata
+
+    ggplot(finaldata, aes(x="", y=Year, fill=Nationality)) +
+    geom_bar(stat="identity", width=1, color="white") +
+    coord_polar("y", start=0) +
+    theme_void() +
+    scale_fill_brewer(palette="Set1")
+    
+  }, height = 350, width = 550)
+}
+shinyApp(ui = ui, server = server)
+``` 
+
 -   [Comparison of the Reasons for the Trips](https://rambleon.shinyapps.io/reasons/)
+
+```{r, echo=TRUE, message=FALSE}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(shiny)
+
+
+reasons_to_come <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/purposes.rds?raw=true"))
+
+reasons_yearly <- reasons_to_come %>%
+  filter(Quarter %in% "Annual") %>%
+  filter(Year != 2022)
+
+#Creating a list for selection
+prefirst <- colnames(reasons_yearly)
+pref_all <- prefirst[(4:11)]
+pref_tr <- prefirst[(14:21)]
+pref <- append(pref_all,pref_tr)
+
+ui <- fluidPage(
+  
+  titlePanel("Travellers Reasons"),
+  
+  sidebarLayout(
+    
+  sidebarPanel(
+    selectInput("purpose1","Select first purpose of visit", choices = pref, selected=pref[3]),
+    selectInput("purpose2","Select second purpose of visit", choices = pref, selected=pref[11])
+  ),
+  
+  mainPanel(
+    plotOutput(outputId = "result", width = "100%")
+  )
+)
+)
+server <- function(input, output, session){
+
+  output$result <- renderPlot({
+    
+    reason_final <- reasons_yearly %>% select(Year, input$purpose1, input$purpose2)
+    names(reason_final)[2] <- "Values"
+    names(reason_final)[3] <- "Value"
+    
+ggplot(reason_final, aes(Year)) + 
+  geom_line(aes(y = Values, colour = input$purpose1)) + 
+  geom_line(aes(y = Value, colour = input$purpose2)) +
+  xlab("Year") + 
+  scale_x_continuous(breaks=c(2012, seq(2012, 2021))) 
+
+  }, height = 350, width = 550)
+}
+shinyApp(ui = ui, server = server)
+```
+
 -   [Categorical Data for Tourism by Year](https://rambleon.shinyapps.io/categories/)
+
+```{r , echo=TRUE, message=FALSE}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(shiny)
+
+income_nights <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/income_nights.rds?raw=true"))
+
+
+#Creating a list for selection
+prefall <- colnames(income_nights)
+pref1 <- prefall[(3:5)]
+pref2 <- prefall[(7:9)]
+pref <- append(pref1,pref2)
+
+#Getting only annual values
+income_annual <- income_nights %>% 
+filter(Quarter %in% c("Anual")) %>%
+filter(Year != 2022)
+
+ui <- fluidPage(
+  
+  titlePanel("Annually Change about Travellers Information"),
+  
+  sidebarLayout(
+    
+  sidebarPanel(
+    selectInput("what","Options for Analysing", choices = pref, selected=pref[2]),
+  ),
+  
+  mainPanel(
+    plotOutput(outputId = "result", width = "100%")
+  )
+)
+)
+server <- function(input, output, session){
+
+  output$result <- renderPlot({
+    
+    income_final <- income_annual %>% select(Year, input$what)
+    names(income_final)[1] <- "Year"
+    names(income_final)[2] <- "Value"
+    
+    ggplot(income_final, aes(x = Year ,y= Value , fill=Year)) + 
+    geom_line()  +
+    xlab("Year") + 
+    scale_x_continuous(breaks=c(2012, seq(2012, 2021))) 
+  }, height = 350, width = 550)
+}
+shinyApp(ui = ui, server = server)
+```
