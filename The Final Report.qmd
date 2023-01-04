@@ -19,13 +19,174 @@ pre {
 
 ## Libraries {-}
 ```{r echo=TRUE, message=FALSE}
-library(ggplot2)
+library(tidyverse)
 library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(reshape2)
+library(plotly)
+library(gapminder)
 library(scales)
+library(hrbrthemes)
+library(viridis)
+library(wordcloud2)
+
 
 ```
 
-## Reasons to Visit Turkey 
+## Analyzing Pandemic Effects on Turkey's Tourisim
+
+With this project, we wanted to examine the effects of the pandemic we have been experiencing worldwide in 2020 on Turkey's tourism in general and on a few specific issues, based on the year-based data we received from TUIK.
+We aim to present by visualizing the changes in the spending behavior of tourists, the changes in the nationality distribution of tourists who prefer Turkey, and the changes in the reasons why tourists come to Turkey with our analysis.
+
+
+## Key Takeaways
+
+1- When we look at the number of visitors in general, the remarkable decrease in the pandemic period is striking. And in many respects, the number of tourists before the pandemic was still not reached.
+
+2- When we look at the income from the pandemic, the improvement after the pandemic has been visible. And however, the amount of expenditure has not increased that much in touristic activities after the pandemic.
+
+3- In country-wide analyzes, we see that while the number of visitors in some countries could not reach the pre-pandemic levels, in some countries there were large numbers of arrivals that did not exist before.
+
+4- In summary, the stagnation during and after the pandemic is gradually dissipating and the number of tourists coming to Turkey and their expenditures are increasing.
+
+
+## Introduction and Datasets
+
+There are 4 data sets that are used in the project. These are called;
+
+* [Number of Departing Visitors by Country of Residence](#visitors_by_country)
+
+* [Foreign and Citizen Visitors by Purpose of Visit](#purpose_of_visit)
+
+* [Tourism Income, Expenditure and Average Number of Nights](#income_nights)
+
+* [Tourism Income, Number of Visitors and Average Expenditure per Capita by Months](#income_capita)
+
+These data sets were taken from TUIK. TUIK is an official data source that provides data for Turkey in diverse topics. [Link](https://www.tuik.gov.tr/) to their website. Links for the data sets that are used here are in [link1](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=N7O40AWrI5/Vv0kzGXnXCe37dlMXqV1pDlocCKGOBLFcdT3rMensZQNlucedTJBo), [link2](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=rq7teMQGT4tWHfTq7G6NgQ3gWeh4AdROY03HvwqqU5HNayOvmSoEISEpD8VEei3L),
+[link3](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=RdTh/zIRI8SkR7eszQAb/fF4hc98DdmiKRs8NMQZIxb8b4pIZS5xXPHQfmwGUX9j) and [link4](https://data.tuik.gov.tr/Bulten/DownloadIstatistikselTablo?p=EdZkC25lxK4s1FVTMo2d7BmGAm0LkKal/5Ol5pSy1oInfQsXoLUmO2cv/Dg21ke5).
+
+
+
+## Outcomes 
+
+If we want to see the general effect of the pandemic in the number of tourists before we move on to the detailed subject analysis, we can see the sharp decrease in 2020 as follows and the decrease in the months in March, April and after when the bans started when we look at the months in 2020 and in 2021, we can see that the effects of the pandemic continue and there are normalization efforts, and we can see both an improvement in the numbers and still less.
+
+```{r}
+
+income_nights <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/income_nights.rds?raw=true"))
+
+
+income_months <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/income_months.rds?raw=true"))
+
+income_n1 <- filter(income_nights, Quarter %in% c("Anual"))
+
+ggplot(income_n1, aes(x = factor(Year), y= Number_of_Departing_Visitors, fill = Number_of_Departing_Visitors, ))+
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  ggtitle("Number of Departing Visitors by Year") +
+  xlab("Year") + ylab("Number of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) + 
+  scale_fill_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  guides(fill=guide_legend(title="Number of Departing Visitors"))
+
+```
+```{r}
+
+income_m1 <- filter(income_months, Months %in% c("January", "February", "March", "April", "May", "June", "July", "August","September","October","November","December"))
+
+income_m1$month_in_int <- as.integer(factor(income_m1$Months, levels = month.name))
+
+ggplot(income_m1, aes(x = reorder(Months, +month_in_int), y = Number_of_Visitors_2020, fill= Number_of_Visitors_2020)) +
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Number of Departing Visitors by Month in 2020") +
+  xlab("Months") + 
+  ylab("Number of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) + 
+  scale_fill_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  guides(fill=guide_legend(title="Number of Visitors in 2020"))
+
+
+ggplot(income_m1, aes(x = reorder(Months, +month_in_int), y = Number_of_Visitors_2021, fill= Number_of_Visitors_2021)) +
+  geom_col(width = 0.5) + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle("Number of Departing Visitors by Month in 2021") +
+  xlab("Months") + 
+  ylab("Number of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  scale_fill_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  guides(fill=guide_legend(title="Number of Visitors in 2021"))
+
+
+```
+
+
+### Spending Behaviour Analysis    
+
+As we see from above graphic although the total income increases over the years, we can see that the expenditures of the tourists coming to Turkey do not exceed a certain limit. 
+
+If we need to talk about the meanings of the words; 
+Tourism Expenditure : Tourism expenditure is the total of individual expenditures, total package tour expenditures remained abroad and GSM roaming expenditures.
+Tourism Income : Tourism income has been started to be calculated using BKM data and the results of the Departing Visitors Survey.
+
+```{r}
+ 
+p <- income_n1 %>%
+  ggplot(aes(Tourism_expenditure_in_ThousandDollars, Tourism_Income_in_ThousandDollars, size = Number_of_Departing_Visitors, color = Year)) + 
+  geom_point() + 
+  theme_bw()+
+  ggtitle("Tourism Expenditure vs. Tourism Income") +
+  xlab("Tourism Expenditure in Thousand Dollars") + 
+  ylab("Tourism Income in Thousand Dollars") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  scale_x_continuous(labels = label_number(suffix = "M", scale = 1e-6))
+
+
+ggplotly(p)
+
+```
+
+
+
+### Nationality Changes    
+
+With this analysis, we will try to analyze whether there is a difference before and after the pandemic on nationatily based. For this analysis we are going to use depart_by_residence dataset.
+This dataset only include the nationality, year and number of visitors came to Turkey.
+
+As we want to examine the effect of the pandemic restrictions and effect of post-pandemic behaviors, we only get the 2019, 2020 and 2021  years for closer look. Because if we were to look all years, it would not be reasonable to make adjustments.
+
+```{r}
+
+residence <- readRDS(url("https://github.com/pjournal/mef06g-ramble-on/blob/main/term_project/melted_depart_by_residence.rds?raw=true")) 
+
+residence_2 <- filter(residence, Dep_Year %in% c("2019", "2020" , "2021", "2022" ) )
+
+ggplot( residence_2, aes(x = Dep_Year, y = Departing_Visitors, group= Nationality, fill = Nationality)) + 
+  geom_area()+ 
+  scale_fill_viridis(discrete = TRUE) + 
+  theme(legend.position = "none") +
+  ggtitle("Visitor's Nationality over the years") + 
+  xlab("Year") + 
+  ylab("Numver of Departing Visitors") + 
+  scale_y_continuous(labels = label_number(suffix = "M", scale = 1e-6)) +
+  theme_ipsum() + 
+  theme(
+    legend.position = "none",
+    panel.spacing = unit(0, "lines"),
+    strip.text.x = element_text(size = 5),
+    plot.title = element_text(size = 12)
+  ) + 
+  facet_wrap(~Nationality, scales = "free_y")
+
+```
+1- Many countries still have not reached the number of tourists that existed before the pandemic, after the pandemic. For example United Kingdom and USA is not reach the level of turists arrival still. 
+
+2- In addition, Ukraine and Switzerland exceeded the number of tourists before the pandemic. (When we consider that the year 2022 is not completed in this data set, we can fully think that it is not a reflection of the Russia-Ukraine war.)
+
+3- In Italy, Georgia, Greece, Japan we can see that there is a tourist arrival far below the pre-pandemic countries. These countries are far below their pre-pandemic arrivals.
+
+
+
+
+### Reasons to Visit Turkey 
 
 To investigate the reasons for coming to Turkey, data will be used in quarter of the year scale. TUIK categorizes these reasons with several topics and since quarters are added, showing all the data we have would be a mess on a single graph. Therefore, filters are used to trim the dates and 2 graphs used to show different categories.
 
@@ -93,3 +254,6 @@ One could expect Education category to act similar as well since it's getting ch
 When it comes to Business, it can be seen that it still does not act like before. Post-pandemic world seem to got used to handle its business with less travel now.
 
 
+## Conclusion 
+
+When we look at the result of all these analyzes, there has been a significant recovery in the number of tourists coming to Turkey in 2022 compared to the pre-pandemic period. Although the economic and cultural effects of the pandemic on tourism have not recovered, it can be predicted that this loss will be compensated by the increase in the number of tourists in 2023. However, considering the economic conditions around the world, it cannot be predicted how the economic salvation on tourism will be.
