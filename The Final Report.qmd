@@ -254,6 +254,17 @@ One could expect Education category to act similar as well since it's getting ch
 When it comes to Business, it can be seen that it still does not act like before. Post-pandemic world seem to got used to handle its business with less travel now.
 
 
+## ShinnyApp 
+
+
+All the conclusions we found and more are available in the shiny apps we developed. It is also possible to make your own analyzes on these data.
+You can access the applications and source codes from the link below.
+
+-   [Shiny Applications](https://pjournal.github.io/mef06g-ramble-on/Shinyapps.html)
+
+
+
+
 ## Conclusion 
 
 When we look at the result of all these analyzes, there has been a significant recovery in the number of tourists coming to Turkey in 2022 compared to the pre-pandemic period. Although the economic and cultural effects of the pandemic on tourism have not recovered, it can be predicted that this loss will be compensated by the increase in the number of tourists in 2023. However, considering the economic conditions around the world, it cannot be predicted how the economic salvation on tourism will be.
